@@ -237,3 +237,10 @@ def insert_genre(dbname, genre_id, genre_name):
     ''', (genre_id, genre_name))
     conn.commit()
     conn.close()
+
+def update_genre(dbname, genre_id, new_name):
+    conn = sql.connect(dbname)
+    c = conn.cursor()
+    c.execute("UPDATE Genre SET genre_name = ? WHERE genre_id = ?", (new_name, genre_id))
+    conn.commit()
+    conn.close()
