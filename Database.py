@@ -77,7 +77,8 @@ def makeTables(dbname):
     c.execute('''
     CREATE TABLE IF NOT EXISTS Director (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT
+        firstName TEXT,
+        lastName TEXT
     );
     ''')
 
@@ -98,7 +99,8 @@ def makeTables(dbname):
     c.execute('''
     CREATE TABLE IF NOT EXISTS Actor (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
+        firstName TEXT,
+        lastName TEXT,
         birthdate DATE,
         nationality TEXT
     );
@@ -179,13 +181,13 @@ def insert_movie(dbname, id, title, release_year, genre, runtime, plot_summary, 
     conn.commit()
     conn.close()
 
-def insert_director(dbname, id, name):
+def insert_director(dbname, id, firstNameame, lastName):
     conn = sql.connect(dbname)
     c = conn.cursor()
     c.execute('''
-    INSERT OR REPLACE INTO Director (id, name)
+    INSERT OR REPLACE INTO Director (id, firstName, lastName)
     VALUES (?, ?)
-    ''', (id, name))
+    ''', (id, firstName, lastName))
     conn.commit()
     conn.close()
 
@@ -199,13 +201,13 @@ def insert_review(dbname, id, movie_id, user_id, rating, review_text):
     conn.commit()
     conn.close()
 
-def insert_actor(dbname, id, name, birthdate, nationality):
+def insert_actor(dbname, id, firstName, lastName, birthdate, nationality):
     conn = sql.connect(dbname)
     c = conn.cursor()
     c.execute('''
-    INSERT OR REPLACE INTO Actor (id, name, birthdate, nationality)
+    INSERT OR REPLACE INTO Actor (id, firstName, lastName, birthdate, nationality)
     VALUES (?, ?, ?, ?)
-    ''', (id, name, birthdate, nationality))
+    ''', (id, firstName, lastName, birthdate, nationality))
     conn.commit()
     conn.close()
 
