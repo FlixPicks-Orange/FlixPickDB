@@ -246,3 +246,41 @@ def update_genre(dbname, genre_id, new_name):
     c.execute("UPDATE Genre SET genre_name = ? WHERE genre_id = ?", (new_name, genre_id))
     conn.commit()
     conn.close()
+
+# When a user logs in, you want to retrieve their information from the database. 
+def get_user_via_username(dbname, username):
+    conn = sql.connect(dbname)
+    c = conn.cursor()
+    c.execute("SELECT * FROM User WHERE username = ?", (username))
+    user = c.fetchone()
+    conn.close()
+    return user
+
+# When a user searches for a movie by its title, you want to retrieve the movie details.
+def get_title_via_(dbname, title):
+    conn = sql.connect(dbname)
+    c = conn.cursor()
+    c.execute("SELECT * FROM Movie WHERE title=?", (title))
+    movie = c.fetchone()
+    conn.close()
+    return movie
+
+# When you want to display all reviews for a particular movie.
+def get_reviews(dbname, movie_id):
+    conn = sql.connect(dbname)
+    c = conn.cursor()
+    c.execute("SELECT * FROM Review WHERE movie_id=?", (movie_id,))
+    reviews = c.fetchall()
+    conn.close()
+    return reviews
+
+# When you want to show a user the list of movies they have rated. 
+def get_ratings_by_user(dbname, user_id):
+    conn = sql.connect(dbname)
+    c = conn.cursor()
+    c.execute("SELECT Movie.* FROM Movie JOIN Review ON Movie.id = Review.movie_id WHERE Review.user_id=?", (user_id,))
+    movies_rated = c.fetchall()
+    conn.close()
+    return movies_rated
+
+
