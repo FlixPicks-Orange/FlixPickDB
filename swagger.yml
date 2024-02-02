@@ -1,0 +1,30 @@
+openapi: '3.0.2'
+info:
+  title: FlixPicks Database API
+  version: '1.0.0'
+
+servers:
+  - url: /api
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+
+
+paths:
+  /users:
+    get:
+      operationId: users.read_all
+      tags:
+        - Users
+      summary: Disply all users
+      responses:
+        '200':
+          description: OK
