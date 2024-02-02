@@ -8,9 +8,8 @@ class User(db.Model):
     username = db.Column(db.String(32), unique=True)
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255))
-    registration_date = db.Column(
-        db.DateTime,  default=datetime.utcnow,  onupdate=datetime.utcnow
-    )
+    registration_date = db.Column(db.DateTime,  default=datetime.utcnow)
+    role = db.Column(db.String(32), default="Standard")
 
     
 class UserSchema(ma.SQLAlchemyAutoSchema):

@@ -11,20 +11,76 @@ components:
   schemas:
     User:
       type: object
+      required:
+        - username
+        - email
       properties:
         username:
           type: string
         email:
           type: string
+        password:
+          type: string
+        role:
+          type: string
+        
 
 
 paths:
   /users:
     get:
-      operationId: users.read_all
+      operationId: users.show_all
       tags:
         - Users
       summary: Disply all users
+      responses:
+        '200':
+          description: OK
+    post:
+      operationId: "users.add"
+      tags:
+        - Users
+      summary: "Add new user to database"
+      requestBody:
+        description: "User to add"
+        required: true
+        content:
+          application/json:
+            schema:
+                x-body-name: "user"
+                $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: "New user added successfully"
+        "422":
+          description: "Username or email provided already exists"
+  
+  /users/{id}:
+    get:
+      operationId: users.lookup_by_id
+      tags:
+        - Users
+      summary: Find existing user by user id
+      responses:
+        '200':
+          description: OK
+
+  /users/username/{username}:
+    get:
+      operationId: users.lookup_by_username
+      tags:
+        - Users
+      summary: Find existing user by username
+      responses:
+        '200':
+          description: OK
+
+  /users/email/{email}:
+    get:
+      operationId: users.lookup_by_email
+      tags:
+        - Users
+      summary: Find existing user by email address
       responses:
         '200':
           description: OK
