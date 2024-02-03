@@ -1,5 +1,5 @@
 FROM python:3
-WORKDIR /home/Docker/back
+WORKDIR /home/Docker/db
 COPY requirements.txt ./
 RUN python -m pip install -r requirements.txt
 COPY . .
