@@ -21,6 +21,10 @@ components:
           type: string
         password:
           type: string
+        fname:
+          type: string
+        lname:
+          type: string
         role:
           type: string
         

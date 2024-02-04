@@ -2,7 +2,7 @@ from flask import render_template, request, jsonify
 import config
 
 app = config.connex_app
-app.add_api(config.basedir / "swagger.yml")
+app.add_api(config.basedir / "swagger.yml", options={"swagger_ui": True, "swagger_url": "/docs"})
 
 
 @app.route("/")
