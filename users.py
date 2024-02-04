@@ -46,3 +46,40 @@ def lookup_by_username(username):
         return user_schmea.dump(user)
     else:
         abort(404, f"User with username {username} not found")
+
+
+def update_full(username, user):
+    existing_user = User.query.filter(User.username == username).one_or_none()
+    if existing_user:
+        update_user = user_schmea.load(user, session=db.session)
+        existing_user.fname = update_user.fname
+        existing_user.lname = update_user.lname
+        existing_user.password = update_user.password
+        existing_user.role = update_user.role
+        db.session.merge(existing_user)
+        db.session.commit()
+        return user_schmea.dump(existing_user), 200
+    else:
+        abort(404, f"User with username {username} not found")
+
+
+def update_password(username, data):
+    existing_user = User.query.filter(User.username == username).one_or_none()
+    if existing_user:
+        existing_user.password = data.get("password")
+        db.session.merge(existing_user)
+        db.session.commit()
+        return user_schmea.dump(existing_user), 200
+    else:
+        abort(404, f"User with username {username} not found")
+
+
+def update_role(username, data):
+    existing_user = User.query.filter(User.username == username).one_or_none()
+    if existing_user:
+        existing_user.role = data.get("role")
+        db.session.merge(existing_user)
+        db.session.commit()
+        return user_schmea.dump(existing_user), 200
+    else:
+        abort(404, f"User with username {username} not found")

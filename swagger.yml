@@ -4,8 +4,7 @@ info:
   version: '1.0.0'
 
 servers:
-  - url: /api
-
+  - url: '/api'
 
 components:
   schemas:
@@ -27,24 +26,36 @@ components:
           type: string
         role:
           type: string
-        
+  parameters:
+    username:
+      name: "username"
+      description: "username"
+      in: path
+      required: True
+      schema:
+        type: "string"
 
+tags:
+  - name: Users
+    description: User profile information for FlixPicks
+  - name: Interactions
+    description: User interactions with media through FlixPicks
 
 paths:
   /users:
     get:
-      operationId: users.show_all
+      summary: Display all users
       tags:
         - Users
-      summary: Disply all users
+      operationId: users.show_all
       responses:
         '200':
           description: OK
     post:
-      operationId: "users.add"
+      summary: Add new user
       tags:
         - Users
-      summary: "Add new user to database"
+      operationId: "users.add"
       requestBody:
         description: "User to add"
         required: true
@@ -57,34 +68,112 @@ paths:
         "201":
           description: "New user added successfully"
         "422":
-          description: "Username or email provided already exists"
-  
+          description: "Username or E-mail provided already exists"    
+
   /users/{id}:
     get:
-      operationId: users.lookup_by_id
+      summary: Find existing user by user id
       tags:
         - Users
-      summary: Find existing user by user id
+      operationId: users.lookup_by_id
       responses:
         '200':
           description: OK
-
+        '404':
+          description: User not found
+ 
   /users/username/{username}:
     get:
-      operationId: users.lookup_by_username
+      summary: Find existing user by username
       tags:
         - Users
-      summary: Find existing user by username
+      operationId: users.lookup_by_username
       responses:
         '200':
           description: OK
+        '404':
+          description: User not found
 
   /users/email/{email}:
     get:
-      operationId: users.lookup_by_email
+      summary: Find existing user by E-mail address
       tags:
         - Users
-      summary: Find existing user by email address
+      operationId: users.lookup_by_email
       responses:
         '200':
           description: OK
+        '404':
+          description: User not found
+
+  /users/update/{username}/full:
+    put:
+      summary: Update User's Profile (All Items)
+      tags:
+        - Users
+      operationId: users.update_full
+      parameters:
+        - $ref: "#/components/parameters/username"
+      requestBody:
+        description: "Updated user information"
+        required: true
+        content:
+          application/json:
+            schema:
+                x-body-name: "user"
+                $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: "User updated successfully"
+        '404':
+          description: User not found
+  
+  /users/update/{username}/password:
+    patch:
+      summary: Update User's Password
+      tags:
+        - Users
+      operationId: users.update_password
+      parameters:
+        - $ref: "#/components/parameters/username"
+      requestBody:
+        description: "New user password to store"
+        required: true
+        content:
+          application/json:
+            schema:
+                x-body-name: "data"
+                type: object
+                properties:
+                  password:
+                    type: string
+      responses:
+        "200":
+          description: "User updated successfully"
+        '404':
+          description: User not found
+  
+  /users/update/{username}/role:
+    patch:
+      summary: Update User's Role
+      tags:
+        - Users
+      operationId: users.update_role
+      parameters:
+        - $ref: "#/components/parameters/username"
+      requestBody:
+        description: "New user role to store"
+        required: true
+        content:
+          application/json:
+            schema:
+                x-body-name: "data"
+                type: object
+                properties:
+                  role:
+                    type: string
+      responses:
+        "200":
+          description: "User updated successfully"
+        '404':
+          description: User not found

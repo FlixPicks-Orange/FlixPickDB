@@ -3,7 +3,7 @@
 # About This Repository
 This repository holds the FlixPicks primary database. This database is driven by OpenAPI.
 
-[Localhost API](localhost:3000/api/docs)
+[Localhost API](http://localhost:3000/api/docs)
 [ODU VM API](http://cs411-orang.student.cs.odu.edu:3000/api/docs)
 
 
