@@ -1,18 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>FlixPicks Database</title>
-    <style>body {background-color: #ebebeb}</style>
-</head>
-<body>
-    <h1>FlixPicks Database</h1>
-    <p>This server hosts FlixPicks primary database. Use the link below to access API documenation.</p>
-    <a href="/api/docs">FlixPicks Database API</a>
+{% extends "base.html" %}
+{% block content %}
+<h1>FlixPicks Database</h1>
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">API Documentation</h5>
+            <p class="card-text">Internal API Documentation for how to read and write information in this database.</p>
+        </div>
+        <div class="card-footer">
+            <a href="/api/docs" class="btn btn-primary btn-sm" target="_blank">API Docs</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Data Tables</h5>
+            <p class="card-text">Used to display current data stored in each table.</p>
+        </div>
+        <div class="card-footer">
+            <a href="{{url_for('all_tables')}}" class="btn btn-primary btn-sm">Data Table</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Run Simulations</h5>
+            <p class="card-text">Special simulations to generate random data for testing and prototype demonstration.</p>
+        </div>
+        <div class="card-footer">
+            <a href="{{url_for('simulation')}}" class="btn btn-primary btn-sm">Simulations</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">External Data</h5>
+            <p class="card-text">Import or refresh media metadata using external resources.</p>
+        </div>
+        <div class="card-footer">
+            <a href="{{url_for('import_data')}}" class="btn btn-primary btn-sm">Import Ext Data</a>
+        </div>
+    </div>
+</div>
 
-    <h2>Show Data For:</h2>
-    <ul>
-        <li><a href="/api/users">FlixPicks Users</a></li>
-    </ul>
-</body>
-</html>
+{% endblock %}

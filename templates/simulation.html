@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Run Simulations</h1>
+{% if result %}
+    {% if result.error %}
+        <div class="alert alert-danger" role="alert">{{ result.message }}</div>
+    {% else %}
+        <div class="alert alert-success" role="alert">{{ result.message }}</div>
+    {% endif %}
+{% else %}
+    <div class="alert alert-primary" role="alert">Use the options below to generate simulated data for prototype demonstration.</div>
+{% endif %}
+<a href="{{url_for('simulation_users')}}" class="btn btn-primary btn-sm">Generate Users</a>
+{% endblock %}

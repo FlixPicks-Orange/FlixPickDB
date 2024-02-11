@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ table_name }}</h1>
+<a href="{{ path }}" class="btn btn-primary btn-sm" target="_blank">Display Direct Output</a><br /><br />
+{{ table_html|safe }}
+{% endblock %}
