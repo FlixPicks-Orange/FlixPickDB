@@ -310,7 +310,6 @@ def generate(num):
         'lname' : random_users["names"][x]["lname"],
         'role' : 'Standard'
         }
-        #r = requests.post(os.getenv('DB_URL') + "/users", json=new_user)
-        r = requests.post("/api/users", json=new_user)
+        r = requests.post(os.getenv('DB_URL') + "/users", json=new_user)
         if(r.status_code == 201): count += 1
     return count
