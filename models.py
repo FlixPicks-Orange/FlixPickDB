@@ -10,8 +10,10 @@ class User(db.Model):
     password = db.Column(db.String(255))
     fname = db.Column(db.String(80))
     lname = db.Column(db.String(80))
-    registration_date = db.Column(db.DateTime,  default=datetime.utcnow)
     role = db.Column(db.String(32), default="Standard")
+    registration_date = db.Column(db.DateTime,  default=datetime.utcnow)
+    last_login = db.Column(db.DateTime, default=datetime.utcnow)
+    limit_subscriptions = db.Column(db.Boolean, default=True)
 
     
 class UserSchema(ma.SQLAlchemyAutoSchema):

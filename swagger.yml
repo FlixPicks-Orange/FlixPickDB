@@ -177,3 +177,42 @@ paths:
           description: "User updated successfully"
         '404':
           description: User not found
+  
+  /users/update/{username}/last_login:
+    patch:
+      summary: Update User's Last Login
+      tags:
+        - Users
+      operationId: users.update_last_login
+      parameters:
+        - $ref: "#/components/parameters/username"
+      responses:
+        "200":
+          description: "User updated successfully"
+        '404':
+          description: User not found
+  
+  /users/update/{username}/limit_subscriptions:
+    patch:
+      summary: Update User's Setting for Limit to Subscriptions
+      tags:
+        - Users
+      operationId: users.update_limit_subscriptions
+      parameters:
+        - $ref: "#/components/parameters/username"
+      requestBody:
+        description: "New user value to store"
+        required: true
+        content:
+          application/json:
+            schema:
+                x-body-name: "data"
+                type: object
+                properties:
+                  limit_subscriptions:
+                    type: boolean
+      responses:
+        "200":
+          description: "User updated successfully"
+        '404':
+          description: User not found

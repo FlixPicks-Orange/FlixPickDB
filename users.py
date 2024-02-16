@@ -1,4 +1,5 @@
 from flask import abort, make_response
+from datetime import datetime
 from config import db
 from models import User, user_schmea, users_schema
 
@@ -56,6 +57,7 @@ def update_full(username, user):
         existing_user.lname = update_user.lname
         existing_user.password = update_user.password
         existing_user.role = update_user.role
+        existing_user.limit_subscriptions = update_user.limit_subscriptions
         db.session.merge(existing_user)
         db.session.commit()
         return user_schmea.dump(existing_user), 200
@@ -78,6 +80,28 @@ def update_role(username, data):
     existing_user = User.query.filter(User.username == username).one_or_none()
     if existing_user:
         existing_user.role = data.get("role")
+        db.session.merge(existing_user)
+        db.session.commit()
+        return user_schmea.dump(existing_user), 200
+    else:
+        abort(404, f"User with username {username} not found")
+
+
+def update_last_login(username):
+    existing_user = User.query.filter(User.username == username).one_or_none()
+    if existing_user:
+        existing_user.last_login = datetime.utcnow()
+        db.session.merge(existing_user)
+        db.session.commit()
+        return user_schmea.dump(existing_user), 200
+    else:
+        abort(404, f"User with username {username} not found")
+
+
+def update_limit_subscriptions(username, data):
+    existing_user = User.query.filter(User.username == username).one_or_none()
+    if existing_user:
+        existing_user.limit_subscriptions = data.get("limit_subscriptions")
         db.session.merge(existing_user)
         db.session.commit()
         return user_schmea.dump(existing_user), 200

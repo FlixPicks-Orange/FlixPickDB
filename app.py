@@ -3,6 +3,7 @@ import pandas as pd
 import config
 import users
 import simulations.userdata as usersim
+import simulations.get_movie_data as moviedata
 
 app = config.connex_app
 
@@ -16,11 +17,19 @@ def all_tables():
     return render_template("all_tables.html")
 
 
+@app.route("/TEST")
+def test():
+    # Examples to get movie data - REMOVE THIS LATER
+    #data = moviedata.show_movie_providers('933131')
+    data = moviedata.get_movies()
+    return data
+
+
 @app.route("/Tables/Users")
 def show_users():
     all_users = users.show_all()
     df = pd.DataFrame(all_users)
-    df = df.reindex(columns=["id", "username", "fname", "lname", "role", "email", "registration_date", "password"])
+    df = df.reindex(columns=["id", "username", "fname", "lname", "role", "email", "registration_date", "last_login", "password"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
     return render_template("display_table.html", table_html = table_html, table_name="Users", path="/api/users")
 
@@ -56,4 +65,4 @@ if __name__ == "__main__":
             "swagger_url": "/docs",
         },
     )
-    app.run(host="0.0.0.0", port=3000, debug=True)
+    app.run(host="0.0.0.0", port=3000, debug=False)
