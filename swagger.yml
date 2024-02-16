@@ -47,7 +47,7 @@ paths:
       summary: Display all users
       tags:
         - Users
-      operationId: users.show_all
+      operationId: userdata.users.show_all
       responses:
         '200':
           description: OK
@@ -55,7 +55,7 @@ paths:
       summary: Add new user
       tags:
         - Users
-      operationId: "users.add"
+      operationId: "userdata.users.add"
       requestBody:
         description: "User to add"
         required: true
@@ -75,7 +75,7 @@ paths:
       summary: Find existing user by user id
       tags:
         - Users
-      operationId: users.lookup_by_id
+      operationId: userdata.users.lookup_by_id
       responses:
         '200':
           description: OK
@@ -87,7 +87,7 @@ paths:
       summary: Find existing user by username
       tags:
         - Users
-      operationId: users.lookup_by_username
+      operationId: userdata.users.lookup_by_username
       responses:
         '200':
           description: OK
@@ -99,7 +99,7 @@ paths:
       summary: Find existing user by E-mail address
       tags:
         - Users
-      operationId: users.lookup_by_email
+      operationId: userdata.users.lookup_by_email
       responses:
         '200':
           description: OK
@@ -111,7 +111,7 @@ paths:
       summary: Update User's Profile (All Items)
       tags:
         - Users
-      operationId: users.update_full
+      operationId: userdata.users.update_full
       parameters:
         - $ref: "#/components/parameters/username"
       requestBody:
@@ -133,7 +133,7 @@ paths:
       summary: Update User's Password
       tags:
         - Users
-      operationId: users.update_password
+      operationId: userdata.users.update_password
       parameters:
         - $ref: "#/components/parameters/username"
       requestBody:
@@ -158,7 +158,7 @@ paths:
       summary: Update User's Role
       tags:
         - Users
-      operationId: users.update_role
+      operationId: userdata.users.update_role
       parameters:
         - $ref: "#/components/parameters/username"
       requestBody:
@@ -183,7 +183,7 @@ paths:
       summary: Update User's Last Login
       tags:
         - Users
-      operationId: users.update_last_login
+      operationId: userdata.users.update_last_login
       parameters:
         - $ref: "#/components/parameters/username"
       responses:
@@ -197,7 +197,7 @@ paths:
       summary: Update User's Setting for Limit to Subscriptions
       tags:
         - Users
-      operationId: users.update_limit_subscriptions
+      operationId: userdata.users.update_limit_subscriptions
       parameters:
         - $ref: "#/components/parameters/username"
       requestBody:

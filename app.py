@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, session
 import pandas as pd
 import config
-import users
+import userdata.users as users
 import simulations.userdata as usersim
 import simulations.get_movie_data as moviedata
 

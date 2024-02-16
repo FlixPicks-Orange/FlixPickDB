@@ -1,7 +1,7 @@
 from flask import abort, make_response
 from datetime import datetime
 from config import db
-from models import User, user_schmea, users_schema
+from userdata.models import User, user_schmea, users_schema
 
 # https://docs.sqlalchemy.org/en/13/orm/query.html#sqlalchemy.orm.query.Query.filter
 
