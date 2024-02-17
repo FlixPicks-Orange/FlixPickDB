@@ -26,6 +26,23 @@ components:
           type: string
         role:
           type: string
+    WatchHistory:
+      type: object
+      required:
+        - user_id
+        - movie_id
+        - title
+        - watched
+      properties:
+        user_id:
+          type: string
+        movie_id:
+          type: string
+        title:
+          type: string
+        watched:
+          type: string
+        
   parameters:
     username:
       name: "username"
@@ -38,6 +55,8 @@ components:
 tags:
   - name: Users
     description: User profile information for FlixPicks
+  - name: Watch History
+    description: History of movies watched by FlixPicks Users
   - name: Interactions
     description: User interactions with media through FlixPicks
 
@@ -216,3 +235,14 @@ paths:
           description: "User updated successfully"
         '404':
           description: User not found
+
+
+  /watch_history:
+    get:
+      summary: Display all watch history
+      tags:
+        - Watch History
+      operationId: userdata.watch_history.show_all
+      responses:
+        '200':
+          description: OK
