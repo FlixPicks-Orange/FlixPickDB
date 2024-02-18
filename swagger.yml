@@ -98,8 +98,7 @@ paths:
         "201":
           description: "New user added successfully"
         "422":
-          description: "Username or E-mail provided already exists"    
-
+          description: "Username or E-mail provided already exists"
   /users/{id}:
     get:
       summary: Find existing user by user id
@@ -157,7 +156,21 @@ paths:
           application/json:
             schema:
                 x-body-name: "user"
-                $ref: "#/components/schemas/User"
+                type: object
+                required:
+                  - password
+                  - fname
+                  - lname
+                  - role
+                properties:
+                  password:
+                    type: string
+                  fname:
+                    type: string
+                  lname:
+                    type: string
+                  role:
+                    type: string
       responses:
         "200":
           description: "User updated successfully"
@@ -180,6 +193,8 @@ paths:
             schema:
                 x-body-name: "data"
                 type: object
+                required:
+                  - password
                 properties:
                   password:
                     type: string
@@ -205,6 +220,8 @@ paths:
             schema:
                 x-body-name: "data"
                 type: object
+                required:
+                  - role
                 properties:
                   role:
                     type: string
@@ -252,8 +269,7 @@ paths:
           description: "User updated successfully"
         '404':
           description: User not found
-
-
+  
   /watch_history:
     get:
       summary: Display all watch history
