@@ -41,4 +41,4 @@ class WatchHistorySchema(ma.SQLAlchemyAutoSchema):
         sqla_session = db.session
 
 WatchHistory_schmea = WatchHistorySchema()
-WatchHistory_schmea = WatchHistorySchema(many=True)
+WatchHistorys_schmea = WatchHistorySchema(many=True)

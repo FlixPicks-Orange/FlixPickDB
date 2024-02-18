@@ -1,5 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Data Tables</h1>
-<a href="{{url_for('show_users')}}" class="btn btn-primary btn-sm">Users Table</a>
+<div class="card-deck">
+    <div class="card" >
+        <h5 class="card-header">User Data</h5>
+        <div class="card-body">
+            <p class="card-text">List of users and how they interact with FlixPicks and their media.</p>
+            <p class="card-text">Use the provided buttons to access tables available in this collection.</p>
+            <a href="{{url_for('show_users')}}" class="btn btn-secondary btn-sm btn-lg btn-block">Users</a>
+            <a href="{{url_for('all_tables')}}" class="btn btn-secondary btn-sm btn-lg btn-block">Subscriptions</a>
+            <a href="{{url_for('show_watch_history')}}" class="btn btn-secondary btn-sm btn-lg btn-block">Watch History</a>
+            <a href="{{url_for('all_tables')}}" class="btn btn-secondary btn-sm btn-lg btn-block">Interactions</a> 
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header">Recommendations</h5>
+        <div class="card-body">
+            <p class="card-text">List of recommendations for each Registered User.</p>
+            <p class="card-text">Use the provided buttons to access tables available in this collection.</p>
+            <a href="{{url_for('all_tables')}}" class="btn btn-secondary btn-sm btn-lg btn-block">Recommendations</a>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header">Content</h5>
+        <div class="card-body">
+            <p class="card-text">Media information from external sources to drive FlixPicks business logic.</p>
+            <p class="card-text">Use the provided buttons to access tables available in this collection.</p>
+            <a href="{{url_for('all_tables')}}" class="btn btn-secondary btn-sm btn-lg btn-block">Movies</a>
+            <a href="{{url_for('all_tables')}}" class="btn btn-secondary btn-sm btn-lg btn-block">Genre</a>
+            <a href="{{url_for('all_tables')}}" class="btn btn-secondary btn-sm btn-lg btn-block">Actors</a>
+            <a href="{{url_for('all_tables')}}" class="btn btn-secondary btn-sm btn-lg btn-block">Directors</a>
+            <a href="{{url_for('all_tables')}}" class="btn btn-secondary btn-sm btn-lg btn-block">Streaming Providers</a>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}

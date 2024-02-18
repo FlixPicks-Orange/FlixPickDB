@@ -1,7 +1,8 @@
-from flask import render_template, redirect, url_for, session
+from flask import render_template, redirect, url_for, session, jsonify
 import pandas as pd
 import config
 import userdata.users as users
+import userdata.watch_history as watch_history
 import simulations.userdata as usersim
 import simulations.get_movie_data as moviedata
 
@@ -21,8 +22,9 @@ def all_tables():
 def test():
     # Examples to get movie data - REMOVE THIS LATER
     #data = moviedata.show_movie_providers('933131')
-    data = moviedata.get_movies()
-    return data
+    data = moviedata.get_providers()
+    #data = moviedata.get_movies()
+    return jsonify(data)
 
 
 @app.route("/Tables/Users")
@@ -32,6 +34,15 @@ def show_users():
     df = df.reindex(columns=["id", "username", "fname", "lname", "role", "email", "registration_date", "last_login", "password"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
     return render_template("display_table.html", table_html = table_html, table_name="Users", path="/api/users")
+
+
+@app.route("/Tables/WatchHistory")
+def show_watch_history():
+    all_history = watch_history.show_all()
+    df = pd.DataFrame(all_history)
+    df = df.reindex(columns=["id", "user_id", "movie_id", "title", "watched"])
+    table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
+    return render_template("display_table.html", table_html = table_html, table_name="Watch History", path="/api/watch_history")
 
 
 @app.route("/Simulation")

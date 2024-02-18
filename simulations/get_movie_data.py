@@ -7,7 +7,20 @@ def get_movies():
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for 4xx and 5xx status codes
         data = response.json()
-        
+        return data
+    
+    except requests.exceptions.RequestException as e:
+        print(f"Error: {e}")
+        return None
+
+
+def get_providers():
+    api_key = '50cb1ca5b03be4ca02207aa9a63691a5'
+    url = f'https://api.themoviedb.org/3/watch/providers/movie?api_key={api_key}&language=en-US'
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an exception for 4xx and 5xx status codes
+        data = response.json()
         return data
     
     except requests.exceptions.RequestException as e:
@@ -22,7 +35,6 @@ def show_movie_providers(tmdb_id):
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for 4xx and 5xx status codes
         data = response.json()
-        
         return data["results"]["US"]
     
     except requests.exceptions.RequestException as e:

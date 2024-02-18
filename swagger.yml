@@ -32,21 +32,32 @@ components:
         - user_id
         - movie_id
         - title
-        - watched
       properties:
         user_id:
-          type: string
+          type: integer
         movie_id:
-          type: string
+          type: integer
         title:
-          type: string
-        watched:
           type: string
         
   parameters:
     username:
       name: "username"
       description: "username"
+      in: path
+      required: True
+      schema:
+        type: "string"
+    email:
+      name: "email"
+      description: "email"
+      in: path
+      required: True
+      schema:
+        type: "string"
+    user_id:
+      name: "id"
+      description: "user id"
       in: path
       required: True
       schema:
@@ -95,6 +106,8 @@ paths:
       tags:
         - Users
       operationId: userdata.users.lookup_by_id
+      parameters:
+        - $ref: "#/components/parameters/user_id"
       responses:
         '200':
           description: OK
@@ -107,6 +120,8 @@ paths:
       tags:
         - Users
       operationId: userdata.users.lookup_by_username
+      parameters:
+        - $ref: "#/components/parameters/username"
       responses:
         '200':
           description: OK
@@ -119,6 +134,8 @@ paths:
       tags:
         - Users
       operationId: userdata.users.lookup_by_email
+      parameters:
+        - $ref: "#/components/parameters/email"
       responses:
         '200':
           description: OK
@@ -243,6 +260,33 @@ paths:
       tags:
         - Watch History
       operationId: userdata.watch_history.show_all
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Add to an itme to the user's watch history
+      tags:
+        - Watch History
+      operationId: "userdata.watch_history.add"
+      requestBody:
+        description: "Entry to add to user's watch history"
+        required: true
+        content:
+          application/json:
+            schema:
+                x-body-name: "entry"
+                $ref: "#/components/schemas/WatchHistory"
+      responses:
+        "201":
+          description: "New entry added successfully"
+  /watch_history/{id}:
+    get:
+      summary: Find user's watch history by user id
+      tags:
+        - Watch History
+      operationId: userdata.watch_history.lookup_by_id
+      parameters:
+        - $ref: "#/components/parameters/user_id"
       responses:
         '200':
           description: OK
