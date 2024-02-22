@@ -14,6 +14,8 @@ class User(db.Model):
     registration_date = db.Column(db.DateTime,  default=datetime.utcnow)
     last_login = db.Column(db.DateTime)
     limit_subscriptions = db.Column(db.Boolean, default=True)
+    survey_check = db.Column(db.Boolean, default=False)
+
 
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
