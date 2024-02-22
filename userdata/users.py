@@ -107,3 +107,14 @@ def update_limit_subscriptions(username, data):
         return user_schmea.dump(existing_user), 200
     else:
         abort(404, f"User with username {username} not found")
+        
+        
+def update_survey_check(username):
+    existing_user = User.query.filter(User.username == username).one_or_none()
+    if existing_user:
+        existing_user.survey_check = True
+        db.session.merge(existing_user)
+        db.session.commit()
+        return user_schmea.dump(existing_user), 200
+    else:
+        abort(404, f"User with username {username} not found")

@@ -270,6 +270,22 @@ paths:
         '404':
           description: User not found
   
+  /users/update/{username}/survey_check:
+    patch:
+      summary: Update User's Survey Check
+      tags:
+        - Users
+      operationId: userdata.users.update_survey_check
+      parameters:
+        - $ref: "#/components/parameters/username"
+      responses:
+        "200":
+          description: "User updated successfully"
+        '404':
+          description: User not found
+
+
+
   /watch_history:
     get:
       summary: Display all watch history
