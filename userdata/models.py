@@ -44,3 +44,20 @@ class WatchHistorySchema(ma.SQLAlchemyAutoSchema):
 
 WatchHistory_schmea = WatchHistorySchema()
 WatchHistorys_schmea = WatchHistorySchema(many=True)
+
+
+class Recommendations(db.Model):
+    __tablename__ = "Recommendations"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    movie_id = db.Column(db.Integer)
+    title = db.Column(db.String(255))
+    recommended = db.Column(db.DateTime, default=datetime.utcnow)
+
+class RecommendationsSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Recommendations
+        load_instance = True
+        sqla_session = db.session
+Recommendations_schema = RecommendationsSchema()
+Recommendationss_schema = RecommendationsSchema(many=True)

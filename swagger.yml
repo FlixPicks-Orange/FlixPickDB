@@ -39,7 +39,21 @@ components:
           type: integer
         title:
           type: string
-        
+    Recommendations:
+      type: object
+      required:
+        - user_id
+        - movie_id
+        - title
+      properties:
+        user_id:
+          type: integer
+        movie_id:
+          type: integer
+        title:
+          type: string
+
+
   parameters:
     username:
       name: "username"
@@ -322,3 +336,30 @@ paths:
       responses:
         '200':
           description: OK
+
+
+  /recommendations:
+    get:
+      summary: Display all recommendations
+      tags:
+        - Recommendations
+      operationId: userdata.recommendations.show_all
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Add to an item to the user's recommendation
+      tags:
+        - Recommendations
+      operationId: "userdata.recommendations.add"
+      requestBody:
+        description: "Entry to add to user's watch history"
+        required: true
+        content:
+          application/json:
+            schema:
+                x-body-name: "entry"
+                $ref: "#/components/schemas/Recommendations"
+      responses:
+        "201":
+          description: "New entry added successfully"
