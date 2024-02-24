@@ -3,6 +3,7 @@ import pandas as pd
 import config
 import userdata.users as users
 import userdata.watch_history as watch_history
+import userdata.recommendations as recommendations
 import simulations.userdata as usersim
 import simulations.get_movie_data as moviedata
 
@@ -43,6 +44,15 @@ def show_watch_history():
     df = df.reindex(columns=["id", "user_id", "movie_id", "title", "watched"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
     return render_template("display_table.html", table_html = table_html, table_name="Watch History", path="/api/watch_history")
+
+
+@app.route("/Tables/Recommendations")
+def show_recommendations():
+    all_recommendations = recommendations.show_all()
+    df = pd.DataFrame(all_recommendations)
+    df = df.reindex(columns=["id", "user_id", "movie_id", "title", "recommended"])
+    table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
+    return render_template("display_table.html", table_html = table_html, table_name="Recommendations", path="/api/recommendations")
 
 
 @app.route("/Simulation")

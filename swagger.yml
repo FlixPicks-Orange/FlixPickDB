@@ -363,3 +363,14 @@ paths:
       responses:
         "201":
           description: "New entry added successfully"
+  
+
+  /movies:
+    get:
+      summary: Display all movies
+      tags:
+        - Movies
+      operationId: content.movies.show_all
+      responses:
+        '200':
+          description: OK

@@ -1,8 +1,6 @@
 from flask import abort, make_response
 from datetime import datetime
 from config import db
-from userdata.models import WatchHistory, WatchHistory_schmea, WatchHistorys_schmea
-from userdata.models import User
 from userdata.models import Recommendations, Recommendations_schema, Recommendationss_schema
 
 def show_all():

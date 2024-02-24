@@ -46,6 +46,7 @@ WatchHistory_schmea = WatchHistorySchema()
 WatchHistorys_schmea = WatchHistorySchema(many=True)
 
 
+# Recommendations Model
 class Recommendations(db.Model):
     __tablename__ = "Recommendations"
     id = db.Column(db.Integer, primary_key=True)
@@ -59,5 +60,6 @@ class RecommendationsSchema(ma.SQLAlchemyAutoSchema):
         model = Recommendations
         load_instance = True
         sqla_session = db.session
+
 Recommendations_schema = RecommendationsSchema()
 Recommendationss_schema = RecommendationsSchema(many=True)
