@@ -1,8 +1,8 @@
 from flask import abort, make_response
 from datetime import datetime
 from config import db
-from content.models import Movie, Movie_schmea, Movies_schmea
+from content.models import Movie, movie_schema, movies_schema
 
 def show_all():
     movies = Movie.query.all()
-    return Movies_schmea.dump(movies)
+    return movies_schema.dump(movies)

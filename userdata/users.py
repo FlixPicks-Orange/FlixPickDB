@@ -1,4 +1,5 @@
-from flask import abort, make_response
+from flask import abort, make_response, jsonify
+from sqlalchemy import and_
 from datetime import datetime
 from config import db
 from userdata.models import User, user_schmea, users_schema
@@ -11,24 +12,27 @@ def show_all():
 
 
 def add(user):
-    email = user.get("email")
-    username = user.get("username")
-    existing_user = User.query.filter(User.username == username).one_or_none()
-    existing_user1 = User.query.filter(User.email == email).one_or_none()
-    
-    if existing_user is None and existing_user1 is None:
+    existing_user = User.query.filter(and_(
+            User.username == user.get("username"),
+            User.email == user.get("email")
+        )).one_or_none()
+    if existing_user is None:
         new_user = user_schmea.load(user, session=db.session)
         db.session.add(new_user)
         db.session.commit()
         return user_schmea.dump(new_user), 201
     else:
-        abort(422, f"User with user {username} already exists")
+        response = {
+            'error': 'Duplicate Entry',
+            'message': 'Username or E-mail provided already exists'
+        }
+        return make_response(jsonify(response), 409)
 
 
-def lookup_by_id(id):
-    user = User.query.filter(User.id == id).one_or_none()
+def lookup_by_id(user_id):
+    user = User.query.filter(User.id == user_id).one_or_none()
     if user is not None:
-        return user_schmea.dump(user)
+        return user_schmea.dump(user), 200
     else:
         abort(404, f"User id {id} not found")
 
@@ -36,7 +40,7 @@ def lookup_by_id(id):
 def lookup_by_email(email):
     user = User.query.filter(User.email == email).one_or_none()
     if user is not None:
-        return user_schmea.dump(user)
+        return user_schmea.dump(user), 200
     else:
         abort(404, f"User with email {email} not found")
 
@@ -44,7 +48,7 @@ def lookup_by_email(email):
 def lookup_by_username(username):
     user = User.query.filter(User.username == username).one_or_none()
     if user is not None:
-        return user_schmea.dump(user)
+        return user_schmea.dump(user), 200
     else:
         abort(404, f"User with username {username} not found")
 

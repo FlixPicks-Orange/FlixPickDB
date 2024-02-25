@@ -42,8 +42,25 @@ class WatchHistorySchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
         sqla_session = db.session
 
-WatchHistory_schmea = WatchHistorySchema()
-WatchHistorys_schmea = WatchHistorySchema(many=True)
+WatchHistory_schema = WatchHistorySchema()
+WatchHistorys_schema = WatchHistorySchema(many=True)
+
+
+# Subscriptions Model
+class Subscription(db.Model):
+    __tablename__ = "Subscriptions"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    provider_id = db.Column(db.Integer)
+    
+class SubscriptionSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Subscription
+        load_instance = True
+        sqla_session = db.session
+
+subscription_schema = SubscriptionSchema()
+subscriptions_schema = SubscriptionSchema(many=True)
 
 
 # Recommendations Model

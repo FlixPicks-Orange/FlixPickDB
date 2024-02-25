@@ -26,6 +26,16 @@ components:
           type: string
         role:
           type: string
+    Subscription:
+      type: object
+      required:
+        - user_id
+        - provider_id
+      properties:
+        user_id:
+          type: integer
+        provider_id:
+          type: integer
     WatchHistory:
       type: object
       required:
@@ -70,24 +80,48 @@ components:
       schema:
         type: "string"
     user_id:
-      name: "id"
+      name: "user_id"
       description: "user id"
       in: path
       required: True
       schema:
         type: "string"
+    provider_id:
+      name: "provider_id"
+      description: "provider id"
+      in: path
+      required: True
+      schema:
+        type: "string"
+    genre_id:
+      name: "genre_id"
+      description: "genre id"
+      in: path
+      required: True
+      schema:
+        type: "string"
+
+
 
 tags:
-  - name: Users
-    description: User profile information for FlixPicks
   - name: Movies
     description: Basic movie information found on FlixPicks
+  - name: Providers
+    description: List of available streaming providers on FlixPicks
+  - name: Genres
+    description: List of available genres used by FlixPicks
+  - name: Users
+    description: User profile information for FlixPicks
+  - name: Subscriptions
+    description: User subscriptions list
   - name: Watch History
     description: History of movies watched by FlixPicks Users
   - name: Recommendations
     description: List of recommendations generated for each registered user
   - name: Interactions
     description: User interactions with media through FlixPicks
+
+
 
 paths:
   /users:
@@ -115,9 +149,9 @@ paths:
       responses:
         "201":
           description: "New user added successfully"
-        "422":
+        "409":
           description: "Username or E-mail provided already exists"
-  /users/{id}:
+  /users/{user_id}:
     get:
       summary: Find existing user by user id
       tags:
@@ -303,6 +337,57 @@ paths:
           description: User not found
 
 
+  /subscriptions:
+    get:
+      summary: Display all subscriptions
+      tags:
+        - Subscriptions
+      operationId: userdata.subscriptions.show_all
+      responses:
+        '200':
+          description: OK
+  
+  /subscriptions/{user_id}:
+    get:
+      summary: Get all genre info by id
+      tags:
+        - Subscriptions
+      operationId: userdata.subscriptions.lookup_by_id
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+      responses:
+        '200':
+          description: OK
+  
+  /subscriptions/{user_id}/update/{provider_id}:
+    post:
+      summary: Add subscription to user's list
+      tags:
+        - Subscriptions
+      operationId: "userdata.subscriptions.add"
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+        - $ref: "#/components/parameters/provider_id"
+      responses:
+        "201":
+          description: "Subscription added successfully"
+        "409":
+          description: "Subscription provided already exists"
+    delete:
+      summary: Remove subscription from user's list
+      tags:
+        - Subscriptions
+      operationId: "userdata.subscriptions.delete"
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+        - $ref: "#/components/parameters/provider_id"
+      responses:
+        "200":
+          description: "Subscription removed successfully"
+        "404":
+          description: "Subscription not found"
+
+
 
   /watch_history:
     get:
@@ -375,6 +460,96 @@ paths:
       tags:
         - Movies
       operationId: content.movies.show_all
+      responses:
+        '200':
+          description: OK
+  
+  /movies/all_providers:
+    get:
+      summary: Display all movie and provider relationships
+      tags:
+        - Movies
+      operationId: content.movie_providers.show_all
+      responses:
+        '200':
+          description: OK
+  
+  /movies/all_genres:
+    get:
+      summary: Display all movie and genre relationships
+      tags:
+        - Movies
+      operationId: content.movie_genres.show_all
+      responses:
+        '200':
+          description: OK
+  
+
+  /providers:
+    get:
+      summary: Display all streaming providers available on FlixPicks
+      tags:
+        - Providers
+      operationId: content.providers.show_all
+      responses:
+        '200':
+          description: OK
+    
+  /providers/{provider_id}:
+    get:
+      summary: Get all provider info by id
+      tags:
+        - Providers
+      operationId: content.providers.lookup_by_id
+      parameters:
+        - $ref: "#/components/parameters/provider_id"
+      responses:
+        '200':
+          description: OK
+  
+  /providers/{provider_id}/name:
+    get:
+      summary: Get provider name by id
+      tags:
+        - Providers
+      operationId: content.providers.get_provider_name
+      parameters:
+        - $ref: "#/components/parameters/provider_id"
+      responses:
+        '200':
+          description: OK
+  
+
+  /genres:
+    get:
+      summary: Display all genres used by FlixPicks
+      tags:
+        - Genres
+      operationId: content.genres.show_all
+      responses:
+        '200':
+          description: OK
+  
+  /genres/{genre_id}:
+    get:
+      summary: Get all genre info by id
+      tags:
+        - Genres
+      operationId: content.genres.lookup_by_id
+      parameters:
+        - $ref: "#/components/parameters/genre_id"
+      responses:
+        '200':
+          description: OK
+  
+  /genres/{genre_id}/name:
+    get:
+      summary: Get genre name by id
+      tags:
+        - Genres
+      operationId: content.genres.get_provider_name
+      parameters:
+        - $ref: "#/components/parameters/genre_id"
       responses:
         '200':
           description: OK
