@@ -80,8 +80,12 @@ components:
 tags:
   - name: Users
     description: User profile information for FlixPicks
+  - name: Movies
+    description: Basic movie information found on FlixPicks
   - name: Watch History
     description: History of movies watched by FlixPicks Users
+  - name: Recommendations
+    description: List of recommendations generated for each registered user
   - name: Interactions
     description: User interactions with media through FlixPicks
 

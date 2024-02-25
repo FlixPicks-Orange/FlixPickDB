@@ -23,7 +23,7 @@ def all_tables():
 def test():
     # Examples to get movie data - REMOVE THIS LATER
     #data = moviedata.show_movie_providers('933131')
-    data = moviedata.get_providers()
+    data = moviedata.download_all_movies()
     #data = moviedata.get_movies()
     return jsonify(data)
 
