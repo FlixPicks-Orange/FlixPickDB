@@ -9,8 +9,7 @@ import content.movies as movies
 import content.providers as providers
 import content.genres as genres
 import simulations.userdata as usersim
-import content.discovery.load_data as discover
-import content.discovery.get_movie_data as moviedata
+import content.discovery.import_movie_data as discovery
 
 app = config.connex_app
 
@@ -23,15 +22,11 @@ def home():
 def all_tables():
     return render_template("all_tables.html")
 
-@app.route("/TEST1")
-def test1():
-    data = moviedata.show_movie('933131')
-    return jsonify(data)
     
-@app.route("/TEST")
+@app.route("/update_providers")
 def test():
-    data = discover.find_movie_info()
-    #data = discover.request_providers("1", "955916")
+    data = discovery.get_providers_for_movie(1,609681)
+    data = discovery.find_missing_providers()
     return jsonify(data)
 
 
