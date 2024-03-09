@@ -1,5 +1,5 @@
 import requests
-from content.models import Movie, movie_schema, movies_schema
+from content.models import Movie, Movie_schema, Movies_schema
 
 API_KEY = '50cb1ca5b03be4ca02207aa9a63691a5'
 BASE_URL = "https://api.themoviedb.org/3"

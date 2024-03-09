@@ -21,8 +21,8 @@ class MovieSchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
         sqla_session = db.session
 
-movie_schema = MovieSchema()
-movies_schema = MovieSchema(many=True)
+Movie_schema = MovieSchema()
+Movies_schema = MovieSchema(many=True)
 
 
 # Movie Provider Relationship Model

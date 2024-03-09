@@ -100,6 +100,13 @@ components:
       required: True
       schema:
         type: "string"
+    movie_id:
+      name: "movie_id"
+      description: "movie id"
+      in: path
+      required: True
+      schema:
+        type: "string"
 
 
 
@@ -460,6 +467,42 @@ paths:
       tags:
         - Movies
       operationId: content.movies.show_all
+      responses:
+        '200':
+          description: OK
+  
+  /movies/{movie_id}:
+    get:
+      summary: Display movie data for provided movie id
+      tags:
+        - Movies
+      operationId: content.movies.get_by_movie_id
+      parameters:
+        - $ref: "#/components/parameters/movie_id"
+      responses:
+        '200':
+          description: OK
+
+  /movies/{movie_id}/genres:
+    get:
+      summary: Display list of genres for provided movie id
+      tags:
+        - Movies
+      operationId: content.movie_genres.get_by_movie_id
+      parameters:
+        - $ref: "#/components/parameters/movie_id"
+      responses:
+        '200':
+          description: OK
+  
+  /movies/{movie_id}/providers:
+    get:
+      summary: Display list of providers for provided movie id
+      tags:
+        - Movies
+      operationId: content.movie_providers.get_by_movie_id
+      parameters:
+        - $ref: "#/components/parameters/movie_id"
       responses:
         '200':
           description: OK
