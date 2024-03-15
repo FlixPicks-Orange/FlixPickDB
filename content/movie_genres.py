@@ -1,8 +1,7 @@
 from flask import abort, make_response
-from datetime import datetime
 from config import db
-from content.models import MovieGenre, MovieGenre_schema, MovieGenres_schema
-from content.models import Genre
+from content.models import MovieGenre, Genre, Movie
+from content.movie_providers import get_by_movie_id as get_providers_by_movie_id
 
 def show_all():
     query_result = (

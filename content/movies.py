@@ -1,7 +1,7 @@
 from flask import abort, make_response
 from datetime import datetime
 from config import db
-from content.models import Movie, Movie_schema, Movies_schema
+from content.models import Movie, MovieGenre, MovieProvider
 from content.movie_providers import get_by_movie_id as get_providers_by_movie_id
 from content.movie_genres import get_by_movie_id as get_genres_by_movie_id
 
@@ -13,6 +13,28 @@ def show_all():
 
 def get_by_movie_id(movie_id):
     query_result = Movie.query.filter(Movie.movie_id == movie_id).all()
+    movies = build_object(query_result)
+    return movies
+
+
+def find_movies_by_genre_id(genre_id):
+    query_result = (
+        Movie.query
+        .join(MovieGenre, MovieGenre.movie_id == Movie.movie_id)
+        .filter(MovieGenre.genre_id == genre_id)
+        .all()
+        )
+    movies = build_object(query_result)
+    return movies
+
+
+def find_movies_by_provider_id(provider_id):
+    query_result = (
+        Movie.query
+        .join(MovieProvider, MovieProvider.movie_id == Movie.movie_id)
+        .filter(MovieProvider.provider_id == provider_id)
+        .all()
+        )
     movies = build_object(query_result)
     return movies
 

@@ -11,10 +11,6 @@ def find_missing_providers():
         if not movie["moive_providers"]:
             providers = get_providers_for_movie(movie["movie_id"], movie["tmdb_id"])
             updates.extend(providers)
-            #updates.append({
-            #    "movie_id": movie["movie_id"],
-            #    "moive_providers": movie["moive_providers"],
-            #})
     return updates
 
 def get_providers_for_movie(movie_id, tmdb_id):
@@ -54,5 +50,4 @@ def get_providers_for_movie(movie_id, tmdb_id):
             'provider_name': 'unknown',
             'link': "https://www.themoviedb.org/movie/" + str(tmdb_id) + "/watch"
         })
-
     return results

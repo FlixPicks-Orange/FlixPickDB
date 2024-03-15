@@ -471,6 +471,30 @@ paths:
         '200':
           description: OK
   
+  /movies/by_genre/{genre_id}:
+    get:
+      summary: Display all movies linked to the specified genre id
+      tags:
+        - Movies
+      operationId: content.movies.find_movies_by_genre_id
+      parameters:
+        - $ref: "#/components/parameters/genre_id"
+      responses:
+        '200':
+          description: OK
+
+  /movies/by_provider/{provider_id}:
+    get:
+      summary: Display all movies linked to the specified provider id
+      tags:
+        - Movies
+      operationId: content.movies.find_movies_by_provider_id
+      parameters:
+        - $ref: "#/components/parameters/provider_id"
+      responses:
+        '200':
+          description: OK
+
   /movies/{movie_id}:
     get:
       summary: Display movie data for provided movie id
