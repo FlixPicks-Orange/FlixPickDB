@@ -31,9 +31,9 @@ def build_object(query_data):
         providers.append({
             "id": movie_provider.id,
             "movie_id": movie_provider.movie_id,
-            "genre_id": movie_provider.provider_id,
-            "link": movie_provider.link,
+            "provider_id": movie_provider.provider_id,
             "provider_name": provider.provider_name,
-            "logo_path": "https://image.tmdb.org/t/p/original" + provider.logo_path
+            "logo_path": "https://image.tmdb.org/t/p/original" + provider.logo_path,
+            "link": movie_provider.link,
         })
     return providers
