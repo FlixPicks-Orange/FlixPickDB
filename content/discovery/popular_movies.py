@@ -3,16 +3,10 @@ import requests
 API_KEY = '50cb1ca5b03be4ca02207aa9a63691a5'
 BASE_URL = "https://api.themoviedb.org/3"
 
-def find_popular_movies():
-    #endpoint = f'{BASE_URL}/movie/popular'
-    #params = {
-    #    'api_key': API_KEY,
-    #    'region': 'US',
-    #    'page': 1
-    #    }
+def find_popular_movies(page_limit=4):
     movie_results = []
     page = 1    
-    while page <= 4:
+    while page <= page_limit:
         endpoint = f'{BASE_URL}/discover/movie'
         params = {
             'api_key': API_KEY,

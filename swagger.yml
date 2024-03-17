@@ -107,6 +107,13 @@ components:
       required: True
       schema:
         type: "string"
+    movie_title:
+      name: "movie_title"
+      description: "movie title"
+      in: path
+      required: True
+      schema:
+        type: "string"
 
 
 
@@ -406,7 +413,7 @@ paths:
         '200':
           description: OK
     post:
-      summary: Add to an itme to the user's watch history
+      summary: Add to an entry to the user's watch history
       tags:
         - Watch History
       operationId: "userdata.watch_history.add"
@@ -421,9 +428,10 @@ paths:
       responses:
         "201":
           description: "New entry added successfully"
+  
   /watch_history/{id}:
     get:
-      summary: Find user's watch history by user id
+      summary: Display watch history for specified user
       tags:
         - Watch History
       operationId: userdata.watch_history.lookup_by_id
@@ -471,6 +479,48 @@ paths:
         '200':
           description: OK
   
+  /movies/{movie_id}:
+    get:
+      summary: Display movie data for specified movie id
+      tags:
+        - Movies
+      operationId: content.movies.get_by_movie_id
+      parameters:
+        - $ref: "#/components/parameters/movie_id"
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Movie {movie_id} not found.
+  
+  /movies/by_title/{movie_title}:
+    get:
+      summary: Search for movie using the specified title
+      tags:
+        - Movies
+      operationId: content.movies.get_by_title
+      parameters:
+        - $ref: "#/components/parameters/movie_title"
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: "{movie_title} not found in moives list."
+
+  /movies/by_tmdb_id/{movie_id}:
+    get:
+      summary: Display movie data for specified TMDB ID
+      tags:
+        - Movies
+      operationId: content.movies.get_by_tmdb_id
+      parameters:
+        - $ref: "#/components/parameters/movie_id"
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Movie {movie_id} not found.
+
   /movies/by_genre/{genre_id}:
     get:
       summary: Display all movies linked to the specified genre id
@@ -482,6 +532,8 @@ paths:
       responses:
         '200':
           description: OK
+        '404':
+          description: Movies not found for specified genre.
 
   /movies/by_provider/{provider_id}:
     get:
@@ -494,22 +546,12 @@ paths:
       responses:
         '200':
           description: OK
-
-  /movies/{movie_id}:
-    get:
-      summary: Display movie data for provided movie id
-      tags:
-        - Movies
-      operationId: content.movies.get_by_movie_id
-      parameters:
-        - $ref: "#/components/parameters/movie_id"
-      responses:
-        '200':
-          description: OK
+        '404':
+          description: Movies not found for specified provider.
 
   /movies/{movie_id}/genres:
     get:
-      summary: Display list of genres for provided movie id
+      summary: Display list of genres for specified movie id
       tags:
         - Movies
       operationId: content.movie_genres.get_by_movie_id
@@ -521,7 +563,7 @@ paths:
   
   /movies/{movie_id}/providers:
     get:
-      summary: Display list of providers for provided movie id
+      summary: Display list of providers for specified movie id
       tags:
         - Movies
       operationId: content.movie_providers.get_by_movie_id
@@ -573,6 +615,8 @@ paths:
       responses:
         '200':
           description: OK
+        '404':
+          description: Provider id {provider_id} not found.
   
   /providers/{provider_id}/name:
     get:
@@ -585,6 +629,8 @@ paths:
       responses:
         '200':
           description: OK
+        '404':
+          description: Provider id {provider_id} not found.
   
 
   /genres:
@@ -608,6 +654,8 @@ paths:
       responses:
         '200':
           description: OK
+        '404':
+          description: Genre id {genre_id} not found.
   
   /genres/{genre_id}/name:
     get:
@@ -620,3 +668,5 @@ paths:
       responses:
         '200':
           description: OK
+        '404':
+          description: Genre id {genre_id} not found.
