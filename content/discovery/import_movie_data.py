@@ -4,6 +4,7 @@ from content.movies import show_all as show_all_movies
 API_KEY = '50cb1ca5b03be4ca02207aa9a63691a5'
 BASE_URL = "https://api.themoviedb.org/3"
 
+# FIND PROVIDERS WHERE NOT SPECIFIED FOR EACH MOVIE IN THE DB
 def find_missing_providers():
     all_movies = show_all_movies()
     updates = []
@@ -13,6 +14,7 @@ def find_missing_providers():
             updates.extend(providers)
     return updates
 
+# FIND PROVIDERS FOR SPECIFIC MOVIE
 def get_providers_for_movie(movie_id, tmdb_id):
     endpoint = f'{BASE_URL}/movie/{tmdb_id}/watch/providers'
     params = {'api_key': API_KEY}
