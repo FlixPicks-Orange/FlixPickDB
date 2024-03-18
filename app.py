@@ -135,6 +135,7 @@ def simulation_patterns_watch_history():
     session["sim_result"] = { "error": False, "message": "Simulated watch history has been generated!" }
     return redirect(url_for('simulation'))
 
+
 @app.route("/Import")
 def import_data():
     return render_template("import_data.html")
