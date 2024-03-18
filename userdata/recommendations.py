@@ -12,3 +12,7 @@ def add(entry):
     db.session.add(new_item)
     db.session.commit()
     return Recommendations_schema.dump(new_item), 201
+
+def lookup_by_id(user_id):
+    recommendations = Recommendations.query.filter(Recommendations.user_id == user_id).all()
+    return Recommendationss_schema.dump(recommendations), 201

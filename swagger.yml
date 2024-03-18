@@ -470,7 +470,17 @@ paths:
       responses:
         "201":
           description: "New entry added successfully"
-  
+  /recommendations/{user_id}:
+    get:
+      summary: Display recommendations for specified user
+      tags:
+        - Recommendations
+      operationId: userdata.recommendations.lookup_by_id
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+      responses:
+        '200':
+          description: OK  
 
 ## MOVIES LIST
   /movies:
