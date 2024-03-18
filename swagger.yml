@@ -429,7 +429,7 @@ paths:
         "201":
           description: "New entry added successfully"
   
-  /watch_history/{id}:
+  /watch_history/{user_id}:
     get:
       summary: Display watch history for specified user
       tags:
