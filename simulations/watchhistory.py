@@ -4,7 +4,7 @@ import os, requests
 
 def generate():
     user_list = []
-    r = requests.get("http://localhost:3000/api/users")
+    r = requests.get(os.getenv('DB_URL') + "/users")
     
     packet = r.json()
 
@@ -21,7 +21,34 @@ def generate():
             "user_id" : int(user)
 
             }
-            response = requests.post("http://localhost:3000/api/watch_history", json=package)
+            response = requests.post(os.getenv('DB_URL') + "/watch_history", json=package)
             print(response)
 
-generate()
+def generate_pattern():
+    user_list = []
+    r = requests.get(os.getenv('DB_URL') + "/users")
+    packet = r.json()
+
+    for entry in packet:
+        user_list.append(entry.get("id"))
+    for user in user_list:
+        group = random.randint(1,4)
+        if group == 1:
+            movielist = [100,101,102,103,104,105]
+        if group == 2:
+            movielist = [100,101,102,103]
+        if group == 3:
+            movielist = [200, 201, 202,203,204,205]
+        if group == 4:
+            movielist = [200, 201,202,203]
+        for number in movielist:
+            package = {
+            "movie_id": number,
+            "title" : "Default",
+            "user_id" : int(user)
+
+            }
+            response = requests.post(os.getenv('DB_URL') + "/watch_history", json=package)
+            print(response)
+
+#generate()

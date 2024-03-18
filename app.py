@@ -9,6 +9,7 @@ import content.movies as movies
 import content.providers as providers
 import content.genres as genres
 import simulations.userdata as usersim
+import simulations.watchhistory
 import content.discovery.movie_providers as movie_providers
 import content.discovery.popular_movies as popular_movies
 
@@ -122,6 +123,17 @@ def simulation_users():
     else: session["sim_result"] = { "error": True, "message": "No simulated users added!" }
     return redirect(url_for('simulation'))
 
+
+@app.route("/Simulation/WatchHistory")
+def simulation_watch_history():
+    simulations.watchhistory.generate()
+    session["sim_result"] = { "error": False, "message": "Simulated watch history has been generated!" }
+    return redirect(url_for('simulation'))
+@app.route("/Simulation/WatchHistoryPattern")
+def simulation_patterns_watch_history():
+    simulations.watchhistory.generate_pattern()
+    session["sim_result"] = { "error": False, "message": "Simulated watch history has been generated!" }
+    return redirect(url_for('simulation'))
 
 @app.route("/Import")
 def import_data():
