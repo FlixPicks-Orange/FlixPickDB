@@ -9,7 +9,7 @@ import content.movies as movies
 import content.providers as providers
 import content.genres as genres
 import simulations.userdata as usersim
-import content.discovery.import_movie_data as discovery
+import content.discovery.movie_providers as movie_providers
 import content.discovery.popular_movies as popular_movies
 
 app = config.connex_app
@@ -24,6 +24,11 @@ def all_tables():
     return render_template("all_tables.html")
 
 
+@app.route("/test")
+def test():
+    pop_movies = movies.show_popular_movies()
+    return jsonify(pop_movies)
+
 @app.route("/find_popular")
 def find_popular():
     data = popular_movies.find_popular_movies()
@@ -33,7 +38,7 @@ def find_popular():
 @app.route("/update_providers")
 def update_providers():
     #data = discovery.get_providers_for_movie(1,609681)
-    data = discovery.find_missing_providers()
+    data = movie_providers.find_missing_providers()
     return jsonify(data)
 
 

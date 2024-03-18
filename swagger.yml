@@ -138,6 +138,7 @@ tags:
 
 
 paths:
+## ALL USERS
   /users:
     get:
       summary: Display all users
@@ -351,6 +352,7 @@ paths:
           description: User not found
 
 
+## USER SUBSCRIPTIONS
   /subscriptions:
     get:
       summary: Display all subscriptions
@@ -402,7 +404,7 @@ paths:
           description: "Subscription not found"
 
 
-
+## WATCH HISTORY
   /watch_history:
     get:
       summary: Display all watch history
@@ -442,6 +444,7 @@ paths:
           description: OK
 
 
+## RECOMMENDATIONS
   /recommendations:
     get:
       summary: Display all recommendations
@@ -469,6 +472,7 @@ paths:
           description: "New entry added successfully"
   
 
+## MOVIES LIST
   /movies:
     get:
       summary: Display all movies
@@ -479,6 +483,16 @@ paths:
         '200':
           description: OK
   
+  /movies/popular:
+    get:
+      summary: Display popular movies sorted by popularity
+      tags:
+        - Movies
+      operationId: content.movies.show_popular_movies
+      responses:
+        '200':
+          description: OK
+
   /movies/{movie_id}:
     get:
       summary: Display movie data for specified movie id
@@ -490,8 +504,8 @@ paths:
       responses:
         '200':
           description: OK
-        '404':
-          description: Movie {movie_id} not found.
+        '204':
+          description: No movies found for the request
   
   /movies/by_title/{movie_title}:
     get:
@@ -504,8 +518,8 @@ paths:
       responses:
         '200':
           description: OK
-        '404':
-          description: "{movie_title} not found in moives list."
+        '204':
+          description: No movies found for the request
 
   /movies/by_tmdb_id/{movie_id}:
     get:
@@ -518,8 +532,8 @@ paths:
       responses:
         '200':
           description: OK
-        '404':
-          description: Movie {movie_id} not found.
+        '204':
+          description: No movies found for the request
 
   /movies/by_genre/{genre_id}:
     get:
@@ -532,8 +546,8 @@ paths:
       responses:
         '200':
           description: OK
-        '404':
-          description: Movies not found for specified genre.
+        '204':
+          description: No movies found for the request
 
   /movies/by_provider/{provider_id}:
     get:
@@ -546,8 +560,8 @@ paths:
       responses:
         '200':
           description: OK
-        '404':
-          description: Movies not found for specified provider.
+        '204':
+          description: No movies found for the request
 
   /movies/{movie_id}/genres:
     get:
@@ -594,6 +608,7 @@ paths:
           description: OK
   
 
+## PROVIDERS
   /providers:
     get:
       summary: Display all streaming providers available on FlixPicks
@@ -633,6 +648,7 @@ paths:
           description: Provider id {provider_id} not found.
   
 
+## GENRES
   /genres:
     get:
       summary: Display all genres used by FlixPicks

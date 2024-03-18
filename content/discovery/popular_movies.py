@@ -3,8 +3,10 @@ import requests
 API_KEY = '50cb1ca5b03be4ca02207aa9a63691a5'
 BASE_URL = "https://api.themoviedb.org/3"
 
+## Display popular movies (4 pages of 20 movies, 80 results)
+## Limited to Netflix, Prime Video, Hulu, Disney+, Max
 def find_popular_movies(page_limit=4):
-    movie_results = []
+    popular_movies = []
     page = 1    
     while page <= page_limit:
         endpoint = f'{BASE_URL}/discover/movie'
@@ -22,7 +24,6 @@ def find_popular_movies(page_limit=4):
         }
         response = requests.get(endpoint, params=params)
         data = response.json()
-        movies = data.get('results', [])
-        movie_results.extend(movies)
+        popular_movies.extend(data.get('results', []))
         page += 1
-    return movie_results
+    return popular_movies
