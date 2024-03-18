@@ -12,8 +12,9 @@ def generate():
         user_list.append(entry.get("id"))
 
     for user in user_list:
-        number_to_add = random.randint(1,50)
-        random_numbers = [random.randint(1,60) for _ in range (number_to_add)]
+        number_to_add = random.randint(3,10)
+        random_numbers = [random.randint(1,20) for _ in range (number_to_add)]
+        random_numbers = set(random_numbers)
         for number in random_numbers:
             package = {
             "movie_id": number,
