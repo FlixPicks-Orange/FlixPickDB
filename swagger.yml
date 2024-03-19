@@ -430,6 +430,15 @@ paths:
       responses:
         "201":
           description: "New entry added successfully"
+  /watch_history/clear:
+    delete:
+      summary: Clear all entries from the user's watch history
+      tags:
+        - Watch History
+      operationId: "userdata.watch_history.clear_all"
+      responses:
+        "200":
+          description: "Watch History cleared"
   
   /watch_history/{user_id}:
     get:
@@ -481,6 +490,15 @@ paths:
       responses:
         '200':
           description: OK  
+  /recommendations/clear:
+    delete:
+      summary: Clear all entries from the recommendations table
+      tags:
+        - Recommendations
+      operationId: "userdata.recommendations.clear_all"
+      responses:
+        "200":
+          description: "Recommendations cleared"
 
 ## MOVIES LIST
   /movies:

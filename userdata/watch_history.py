@@ -20,3 +20,8 @@ def add(entry):
 def lookup_by_id(user_id):
     watch_history = WatchHistory.query.filter(WatchHistory.user_id == user_id).all()
     return WatchHistorys_schema.dump(watch_history)
+
+def clear_all():
+    db.session.query(WatchHistory).delete()
+    db.session.commit()
+    return 200
