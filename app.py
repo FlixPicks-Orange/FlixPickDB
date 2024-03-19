@@ -137,14 +137,23 @@ def simulation_patterns_watch_history():
     session["sim_result"] = { "error": False, "message": "Simulated watch history has been generated!" }
     return redirect(url_for('simulation'))
 
+@app.route("/Simulation/WatchHistory/Clear")
+def clear_watch_history():
+    simulations.watchhistory.clear()
+    session["sim_result"] = { "error": False, "message": "Watch History Cleared" }
+    return redirect(url_for('simulation'))
+
 @app.route("/Simulation/Recommendations")
 def simulation_recommendations():
     simulations.recommendations.generate()
     session["sim_result"] = { "error": False, "message": "Simulated Recommendations Populated!" }
     return redirect(url_for('simulation'))
-@app.route("/WatchHistory/Clear")
-def clear_watch_history():
-    
+
+@app.route("/Simulation/Recommendations/Clear")
+def clear_recommendations():
+    simulations.recommendations.clear()
+    session["sim_result"] = { "error": False, "message": "Recommendations Cleared" }
+    return redirect(url_for('simulation'))
 
 
 @app.route("/Import")

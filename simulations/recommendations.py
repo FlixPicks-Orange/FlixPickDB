@@ -20,3 +20,7 @@ def generate():
             }
             response = requests.post(os.getenv('DB_URL') + "/recommendations", json=package)
             print(response)
+
+def clear():
+    r = requests.delete(os.getenv('DB_URL') + "/recommendations/clear")
+    print(f"Clear response {r.status_code}")

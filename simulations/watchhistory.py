@@ -50,5 +50,7 @@ def generate_pattern():
             }
             response = requests.post(os.getenv('DB_URL') + "/watch_history", json=package)
             print(response)
-
+def clear():
+    r = requests.delete(os.getenv('DB_URL') + "/watch_history/clear")
+    print(f"Clear response {r.status_code}")
 #generate()
