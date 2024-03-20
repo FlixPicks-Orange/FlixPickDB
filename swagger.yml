@@ -460,6 +460,17 @@ paths:
         "201":
           description: "New entry added successfully"
   
+  /recommendations/{user_id}:
+    get:
+      summary: Display all recommendations for specific user
+      tags:
+        - Recommendations
+      operationId: userdata.recommendations.get_user_recommendations_by_userID
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+      responses:
+        '200':
+          description: OK
 
   /movies:
     get:
