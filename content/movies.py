@@ -1,7 +1,7 @@
-from flask import abort, make_response
+from flask import abort, make_response, jsonify
 from datetime import datetime
 from config import db
-from content.models import Movie, MovieGenre, MovieProvider
+from content.models import Movie, MovieGenre, MovieProvider, Movies_schema
 from content.movie_providers import get_by_movie_id as get_providers_by_movie_id
 from content.movie_genres import get_by_movie_id as get_genres_by_movie_id
 from content.discovery.popular_movies import find_popular_movies
@@ -12,6 +12,9 @@ def show_all():
     movies = build_json_result(query_result)
     return movies
 
+def show_all_movie_titles():
+    movies = Movie.query.with_entities(Movie.title).all()
+    return Movies_schema.dump(movies)
 
 def get_by_title(movie_title):
     query_result = Movie.query.filter(Movie.title.like(f"%{movie_title}%")).all()

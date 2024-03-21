@@ -511,6 +511,16 @@ paths:
         '200':
           description: OK
   
+  /movies/get_titles:
+    get:
+      summary: Display all movie titles only
+      tags:
+        - Movies
+      operationId: content.movies.show_all_movie_titles
+      responses:
+        '200':
+          description: OK
+
   /movies/popular:
     get:
       summary: Display popular movies sorted by popularity
