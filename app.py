@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, session, jsonify
+from flask import render_template, redirect, url_for, session, jsonify, request
 import pandas as pd
 import config
 import userdata.users as users
@@ -66,7 +66,7 @@ def show_subscriptions():
 def show_watch_history():
     table_data = watch_history.show_all()
     df = pd.DataFrame(table_data)
-    df = df.reindex(columns=["id", "user_id", "movie_id", "title", "watched"])
+    df = df.reindex(columns=["id", "user_id", "movie_id", "watched", "from_recommended"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
     return render_template("display_table.html", table_html = table_html, table_name="Watch History", path="/api/watch_history")
 
@@ -125,17 +125,18 @@ def simulation_users():
     return redirect(url_for('simulation'))
 
 
-@app.route("/Simulation/WatchHistory")
+@app.route("/Simulation/WatchHistory", methods=['GET', 'POST'])
 def simulation_watch_history():
-    simulations.watchhistory.generate()
-    session["sim_result"] = { "error": False, "message": "Simulated watch history has been generated!" }
+    if request.method == 'POST':
+        Operation = request.form['Operation']
+        MinEntries = int(request.form['MinEntries'])
+        MaxEntries = int(request.form['MaxEntries'])
+        RecFrequency = int(request.form['RecFrequency'])
+        session["sim_result"] = simulations.watchhistory.run_simulation(Operation, MinEntries, MaxEntries, RecFrequency)
+    else:
+        session["sim_result"] = { "error": True, "message": "Unable to generate simulated Watch History" }
     return redirect(url_for('simulation'))
 
-@app.route("/Simulation/WatchHistoryPattern")
-def simulation_patterns_watch_history():
-    simulations.watchhistory.generate_pattern()
-    session["sim_result"] = { "error": False, "message": "Simulated watch history has been generated!" }
-    return redirect(url_for('simulation'))
 
 @app.route("/Simulation/WatchHistory/Clear")
 def clear_watch_history():
@@ -143,11 +144,13 @@ def clear_watch_history():
     session["sim_result"] = { "error": False, "message": "Watch History Cleared" }
     return redirect(url_for('simulation'))
 
+
 @app.route("/Simulation/Recommendations")
 def simulation_recommendations():
     simulations.recommendations.generate()
     session["sim_result"] = { "error": False, "message": "Simulated Recommendations Populated!" }
     return redirect(url_for('simulation'))
+
 
 @app.route("/Simulation/Recommendations/Clear")
 def clear_recommendations():

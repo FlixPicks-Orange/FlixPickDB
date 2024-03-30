@@ -8,12 +8,29 @@
         <div class="alert alert-success" role="alert">{{ result.message }}</div>
     {% endif %}
 {% else %}
-    <div class="alert alert-primary" role="alert">Use the options below to generate simulated data for prototype demonstration.</div>
+    <div class="alert alert-primary" role="alert">Use the tools below to generate simulated data for prototype demonstration.</div>
 {% endif %}
-<a href="{{url_for('simulation_users')}}" class="btn btn-primary btn-sm">Generate Users</a>
-<a href="{{url_for('simulation_watch_history')}}" class="btn btn-primary btn-sm">Generate Watch History</a>
-<a href="{{url_for('simulation_patterns_watch_history')}}" class="btn btn-primary btn-sm">Generate Patterns in Watch History</a>
-<a href="{{url_for('simulation_recommendations')}}" class="btn btn-primary btn-sm">Populated Recommendations</a>
-<a href="{{url_for('clear_recommendations')}}" class="btn btn-primary btn-sm">Clear Recommendations</a>
-<a href="{{url_for('clear_watch_history')}}" class="btn btn-primary btn-sm">Clear Watch History</a>
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h3>FlixPicks Users</h3>
+            <a href="{{url_for('simulation_users')}}" class="btn btn-primary">Generate Users</a>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col">
+            <h3>Watch History</h3>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#WatchHistoryDialog">Generate Watch History</button>
+            <a href="{{url_for('clear_watch_history')}}" class="btn btn-primary">Clear Watch History</a>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col">
+            <h3>Recommendations</h3>
+            <a href="{{url_for('simulation_recommendations')}}" class="btn btn-primary">Populated Recommendations</a>
+            <a href="{{url_for('clear_recommendations')}}" class="btn btn-primary">Clear Recommendations</a>
+        </div>
+    </div>
+</div>
+{% include 'dialogs/WatchHistory.html' %}
 {% endblock %}

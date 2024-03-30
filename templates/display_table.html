@@ -1,5 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+table { border-collapse: collapse; }
+th, td { text-align: left; padding: 8px; }
+tr:nth-child(even) { background-color: #f2f2f2; }
+th { color: #333333; background-color: #a2a6a9; }
+th.sticky { position: sticky; top: 0; }
+</style>
+<script>
+window.onload = function() {
+    var table = document.getElementsByTagName('table')[0];
+    var headers = table.getElementsByTagName('th');
+    for (var i = 0; i < headers.length; i++) { headers[i].classList.add('sticky'); }
+};
+</script>
 <h1>{{ table_name }}</h1>
 <a href="{{ path }}" class="btn btn-primary btn-sm" target="_blank">Display Direct Output</a><br /><br />
 {{ table_html|safe }}

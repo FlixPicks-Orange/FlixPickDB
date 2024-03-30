@@ -41,14 +41,14 @@ components:
       required:
         - user_id
         - movie_id
-        - title
+        - from_recommended
       properties:
         user_id:
           type: integer
         movie_id:
           type: integer
-        title:
-          type: string
+        from_recommended:
+          type: boolean
     Recommendations:
       type: object
       required:
