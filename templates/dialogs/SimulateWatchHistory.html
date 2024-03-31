@@ -1,4 +1,4 @@
-<form action="{{url_for('simulation_watch_history')}}" method="post" class="modal fade" id="WatchHistoryDialog" tabindex="-1" role="dialog" aria-labelledby="WatchHistoryDialog" aria-hidden="true">
+<form action="{{url_for('simulation_watch_history')}}" method="post" class="modal fade" id="SimWatchHistoryDialog" tabindex="-1" role="dialog" aria-labelledby="SimWatchHistoryDialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -44,7 +44,7 @@
     </div>
 </form>
 <script>
-var radioInputs = document.querySelectorAll('form[id="WatchHistoryDialog"] input[name="Operation"]');
+var radioInputs = document.querySelectorAll('form[id="SimWatchHistoryDialog"] input[name="Operation"]');
 radioInputs.forEach(function(input) {
     input.addEventListener('change', function() {
         var operation2Checked = document.getElementById("WatchHistoryOp2").checked;

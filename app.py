@@ -5,6 +5,7 @@ import userdata.users as users
 import userdata.subscriptions as subscriptions
 import userdata.watch_history as watch_history
 import userdata.recommendations as recommendations
+import userdata.user_ratings as user_ratings
 import content.movies as movies
 import content.providers as providers
 import content.genres as genres
@@ -21,16 +22,6 @@ def home():
     return render_template("home.html")
 
 
-@app.route("/Tables")
-def all_tables():
-    return render_template("all_tables.html")
-
-
-@app.route("/test")
-def test():
-    pop_movies = movies.show_popular_movies()
-    return jsonify(pop_movies)
-
 @app.route("/find_popular")
 def find_popular():
     data = popular_movies.find_popular_movies()
@@ -42,6 +33,11 @@ def update_providers():
     #data = discovery.get_providers_for_movie(1,609681)
     data = movie_providers.find_missing_providers()
     return jsonify(data)
+
+
+@app.route("/Tables")
+def all_tables():
+    return render_template("all_tables.html")
 
 
 @app.route("/Tables/Users")
@@ -80,6 +76,15 @@ def show_recommendations():
     return render_template("display_table.html", table_html = table_html, table_name="Recommendations", path="/api/recommendations")
 
 
+@app.route("/Tables/User_Ratings")
+def show_user_ratings():
+    table_data = user_ratings.show_all()
+    df = pd.DataFrame(table_data)
+    df = df.reindex(columns=["id", "user_id", "movie_id", "user_liked"])
+    table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
+    return render_template("display_table.html", table_html = table_html, table_name="User Ratings", path="/api/user_ratings")
+
+
 @app.route("/Tables/Movies")
 def show_movies():
     table_data = movies.show_all()
@@ -112,16 +117,18 @@ def simulation():
     if(session.get("sim_result")):
         result = session.get("sim_result")
         session["sim_result"] = None
-    else:
-        result = None
+    else: result = None
     return render_template("simulation.html", result=result)
 
 
-@app.route("/Simulation/Users")
+@app.route("/Simulation/Users", methods=['GET', 'POST'])
 def simulation_users():
-    count = usersim.generate(100)
-    if(count > 0): session["sim_result"] = { "error": False, "message": str(count) + " simulated users added!" }
-    else: session["sim_result"] = { "error": True, "message": "No simulated users added!" }
+    if request.method == 'POST':
+        count = usersim.generate(int(request.form['NumUsers']))
+        if(count > 0): session["sim_result"] = { "error": False, "message": str(count) + " simulated users added!" }
+        else: session["sim_result"] = { "error": True, "message": "No simulated users added!" }
+    else:
+        session["sim_result"] = { "error": True, "message": "Unable to generate simulated users!" }
     return redirect(url_for('simulation'))
 
 
@@ -134,7 +141,7 @@ def simulation_watch_history():
         RecFrequency = int(request.form['RecFrequency'])
         session["sim_result"] = simulations.watchhistory.run_simulation(Operation, MinEntries, MaxEntries, RecFrequency)
     else:
-        session["sim_result"] = { "error": True, "message": "Unable to generate simulated Watch History" }
+        session["sim_result"] = { "error": True, "message": "Unable to generate simulated Watch History!" }
     return redirect(url_for('simulation'))
 
 
