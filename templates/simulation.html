@@ -31,7 +31,15 @@
             <a href="{{url_for('clear_recommendations')}}" class="btn btn-primary">Clear Recommendations</a>
         </div>
     </div>
+    <div class="row mb-4">
+        <div class="col">
+            <h3>User Ratings</h3>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SimUserRatingsDialog">Generate User Ratings</button>
+            <a href="{{url_for('clear_user_ratings')}}" class="btn btn-primary">Clear User Ratings</a>
+        </div>
+    </div>
 </div>
 {% include 'dialogs/SimulateUsers.html' %}
 {% include 'dialogs/SimulateWatchHistory.html' %}
+{% include 'dialogs/SimulateUserRatings.html' %}
 {% endblock %}

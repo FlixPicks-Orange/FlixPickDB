@@ -1,39 +1,27 @@
 import random
 import os, requests
+from userdata.users import get_all_user_ids
 from pyprobs import Probability as pr
 # Source: https://stackoverflow.com/questions/14324472/get-a-random-boolean-by-percentage
 
-def run_simulation(Operation, MinEntries, MaxEntries, RecFrequency):
+def run_simulation(Operation, MinEntries, MaxEntries, ProbFrequency):
     if Operation == 'UsePatterns':
         generate_pattern()
         return { "error": False, "message": "Simulated Watch History has been generated!" }
     elif Operation == 'Random':
-        generate_random(MinEntries, MaxEntries, RecFrequency)
+        generate_random(MinEntries, MaxEntries, ProbFrequency)
         return { "error": False, "message": "Simulated Watch History has been generated!" }
     else:
         return { "error": True, "message": "Unable to generate simulated Watch History" }
 
 
-def generate_random(MinEntries, MaxEntries, RecFrequency):
-    user_list = []
-    r = requests.get(os.getenv('DB_URL') + "/users")
-    packet = r.json()
-
-    for entry in packet:
-        user_list.append(entry.get("id"))
-
+def generate_random(MinEntries, MaxEntries, ProbFrequency):
+    user_list = get_all_user_ids()
     for user in user_list:
         number_to_add = random.randint(MinEntries, MaxEntries)
-        #random_numbers = [random.randint(1,20) for _ in range (number_to_add)]
-        #random_numbers = set(random_numbers)
-        #for number in random_numbers:
         for entry in range(number_to_add):
-            # Generate Random Movie ID
             movie_id = random.randint(1, 380)
-            # Pick True or False Based On Provided Frequency
-            probabiltiy = RecFrequency / 100
-            from_recommended = pr.prob(probabiltiy)
-            #Insert Into Database
+            from_recommended = pr.prob(ProbFrequency/100)
             package = {
             "movie_id": movie_id,
             "from_recommended" : from_recommended,
@@ -44,13 +32,7 @@ def generate_random(MinEntries, MaxEntries, RecFrequency):
 
 
 def generate_pattern():
-    user_list = []
-    r = requests.get(os.getenv('DB_URL') + "/users")
-    packet = r.json()
-
-    for entry in packet:
-        user_list.append(entry.get("id"))
-        
+    user_list = get_all_user_ids()
     for user in user_list:
         group = random.randint(1,4)
         if group == 1:

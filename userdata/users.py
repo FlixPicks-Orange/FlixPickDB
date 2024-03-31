@@ -11,6 +11,10 @@ def show_all():
     return users_schema.dump(users)
 
 
+def get_all_user_ids():
+    user_ids = [user.id for user in User.query.all()]
+    return user_ids
+
 def add(user):
     existing_user = User.query.filter(and_(
             User.username == user.get("username"),

@@ -25,40 +25,31 @@ def show_by_user_and_movie(user_id, movie_id):
 
 
 def add_rating_like(user_id, movie_id):
-    existing = UserRatings.query.filter(and_(
-        UserRatings.user_id == user_id,
-        UserRatings.movie_id == movie_id
-        )).one_or_none()
-    if existing is None:
-        return insert_rating(user_id, movie_id, True)
-    else:
-        existing.user_liked = True
-        db.session.commit()
-        return UserRating_schema.dump(existing), 201
+    return insert_rating(user_id, movie_id, True)
     
 
 def add_rating_dislike(user_id, movie_id):
+    return insert_rating(user_id, movie_id, False)
+
+
+def insert_rating(user_id, movie_id, user_liked):
     existing = UserRatings.query.filter(and_(
         UserRatings.user_id == user_id,
         UserRatings.movie_id == movie_id
         )).one_or_none()
     if existing is None:
-        return insert_rating(user_id, movie_id, False)
+        new_entry = UserRating_schema.load({
+            "user_id": user_id,
+            "movie_id": movie_id,
+            "user_liked": user_liked
+            }, session=db.session)
+        db.session.add(new_entry)
+        db.session.commit()
+        return UserRating_schema.dump(new_entry), 201
     else:
-        existing.user_liked = False
+        existing.user_liked = user_liked
         db.session.commit()
         return UserRating_schema.dump(existing), 201
-
-
-def insert_rating(user_id, movie_id, user_liked):
-    new_entry = UserRating_schema.load({
-        "user_id": user_id,
-        "movie_id": movie_id,
-        "user_liked": user_liked
-        }, session=db.session)
-    db.session.add(new_entry)
-    db.session.commit()
-    return UserRating_schema.dump(new_entry), 201
 
 
 def remove_from_user_ratings(user_id, movie_id):

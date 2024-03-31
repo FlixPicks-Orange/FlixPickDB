@@ -12,6 +12,7 @@ import content.genres as genres
 import simulations.userdata as usersim
 import simulations.watchhistory
 import simulations.recommendations
+import simulations.user_ratings
 import content.discovery.movie_providers as movie_providers
 import content.discovery.popular_movies as popular_movies
 
@@ -138,8 +139,8 @@ def simulation_watch_history():
         Operation = request.form['Operation']
         MinEntries = int(request.form['MinEntries'])
         MaxEntries = int(request.form['MaxEntries'])
-        RecFrequency = int(request.form['RecFrequency'])
-        session["sim_result"] = simulations.watchhistory.run_simulation(Operation, MinEntries, MaxEntries, RecFrequency)
+        ProbFrequency = int(request.form['ProbFrequency'])
+        session["sim_result"] = simulations.watchhistory.run_simulation(Operation, MinEntries, MaxEntries, ProbFrequency)
     else:
         session["sim_result"] = { "error": True, "message": "Unable to generate simulated Watch History!" }
     return redirect(url_for('simulation'))
@@ -163,6 +164,25 @@ def simulation_recommendations():
 def clear_recommendations():
     simulations.recommendations.clear()
     session["sim_result"] = { "error": False, "message": "Recommendations Cleared" }
+    return redirect(url_for('simulation'))
+
+
+@app.route("/Simulation/UserRatings", methods=['GET', 'POST'])
+def simulation_user_ratings():
+    if request.method == 'POST':
+        ProbRating = int(request.form['ProbRating'])
+        ProbLikes = int(request.form['ProbLikes'])
+        session["sim_result"] = simulations.user_ratings.run_simulation(ProbRating, ProbLikes)
+        #session["sim_result"] = { "error": False, "message": "TEST:  Prob Rating: " + str(ProbRating) + "   Prob Likes: " + str(ProbLikes) }
+    else:
+        session["sim_result"] = { "error": True, "message": "Unable to generate simulated Watch History!" }
+    return redirect(url_for('simulation'))
+
+
+@app.route("/Simulation/UserRatings/Clear")
+def clear_user_ratings():
+    simulations.user_ratings.clear()
+    session["sim_result"] = { "error": False, "message": "User Ratings Cleared" }
     return redirect(url_for('simulation'))
 
 
