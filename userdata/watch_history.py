@@ -1,4 +1,5 @@
 from flask import abort, make_response
+from sqlalchemy import and_
 from datetime import datetime
 from config import db
 from userdata.models import WatchHistory, WatchHistory_schema, WatchHistorys_schema
@@ -19,8 +20,30 @@ def add(entry):
 
 
 def lookup_by_id(user_id):
-    watch_history = WatchHistory.query.filter(WatchHistory.user_id == user_id).all()
+    watch_history = WatchHistory.query.filter(and_(
+        WatchHistory.user_id == user_id,
+        WatchHistory.supressed == False
+        )).order_by(WatchHistory.watched.desc()).all()
     return WatchHistorys_schema.dump(watch_history)
+
+
+def remove_from_watch_history(user_id, movie_id):
+    watch_history = WatchHistory.query.filter(and_(
+        WatchHistory.user_id == user_id,
+        WatchHistory.movie_id == movie_id
+        )).all()
+    for entry in watch_history:
+        entry.supressed = True
+    db.session.commit()
+    return WatchHistorys_schema.dump(watch_history), 200
+
+
+def clear_watch_history(user_id):
+    watch_history = WatchHistory.query.filter(WatchHistory.user_id == user_id).all()
+    for entry in watch_history:
+        entry.supressed = True
+    db.session.commit()
+    return WatchHistorys_schema.dump(watch_history), 200
 
 
 def clear_all():

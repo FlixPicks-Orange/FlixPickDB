@@ -35,6 +35,7 @@ class WatchHistory(db.Model):
     movie_id = db.Column(db.Integer)
     watched = db.Column(db.DateTime, default=datetime.utcnow)
     from_recommended = db.Column(db.Boolean, default=False)
+    supressed = db.Column(db.Boolean, default=False)
     
 class WatchHistorySchema(ma.SQLAlchemyAutoSchema):
     class Meta:

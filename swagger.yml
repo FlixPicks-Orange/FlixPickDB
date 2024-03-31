@@ -430,9 +430,10 @@ paths:
       responses:
         "201":
           description: "New entry added successfully"
+  
   /watch_history/clear:
     delete:
-      summary: Clear all entries from the user's watch history
+      summary: Clear all entries from watch history (Delete All Entries)
       tags:
         - Watch History
       operationId: "userdata.watch_history.clear_all"
@@ -440,6 +441,31 @@ paths:
         "200":
           description: "Watch History cleared"
   
+  /watch_history/clear/{user_id}:
+    delete:
+      summary: Clear all entries from the provided user's watch history (supress entry only)
+      tags:
+        - Watch History
+      operationId: "userdata.watch_history.clear_watch_history"
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+      responses:
+        "200":
+          description: "Watch History cleared"
+  
+  /watch_history/clear/{user_id}/{movie_id}:
+    delete:
+      summary: Remove specified movie from the provided user's watch history (supress entry only)
+      tags:
+        - Watch History
+      operationId: "userdata.watch_history.remove_from_watch_history"
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+        - $ref: "#/components/parameters/movie_id"
+      responses:
+        "200":
+          description: "Watch History cleared"
+
   /watch_history/{user_id}:
     get:
       summary: Display watch history for specified user
