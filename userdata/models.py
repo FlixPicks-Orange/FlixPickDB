@@ -81,3 +81,21 @@ class RecommendationsSchema(ma.SQLAlchemyAutoSchema):
 
 Recommendations_schema = RecommendationsSchema()
 Recommendationss_schema = RecommendationsSchema(many=True)
+
+
+# User Ratings Model
+class UserRatings(db.Model):
+    __tablename__ = "User_Ratings"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    movie_id = db.Column(db.Integer)
+    user_liked = db.Column(db.Boolean)
+
+class UserRatingsSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = UserRatings
+        load_instance = True
+        sqla_session = db.session
+
+UserRating_schema = UserRatingsSchema()
+UserRatings_schema = UserRatingsSchema(many=True)

@@ -132,8 +132,11 @@ tags:
     description: History of movies watched by FlixPicks Users
   - name: Recommendations
     description: List of recommendations generated for each registered user
+  - name: User Ratings
+    description: History of User Ratings for Movies (Likes and Dislikes)
   - name: Interactions
     description: User interactions with media through FlixPicks
+
 
 
 
@@ -453,7 +456,7 @@ paths:
         "200":
           description: "Watch History cleared"
   
-  /watch_history/clear/{user_id}/{movie_id}:
+  /watch_history/clear/{user_id}/movie/{movie_id}:
     delete:
       summary: Remove specified movie from the provided user's watch history (supress entry only)
       tags:
@@ -521,10 +524,105 @@ paths:
       summary: Clear all entries from the recommendations table
       tags:
         - Recommendations
-      operationId: "userdata.recommendations.clear_all"
+      operationId: userdata.recommendations.clear_all
       responses:
         "200":
           description: "Recommendations cleared"
+
+
+## USER RATINGS
+  /user_ratings:
+    get:
+      summary: Display all user ratings (all users)
+      tags:
+        - User Ratings
+      operationId: userdata.user_ratings.show_all
+      responses:
+        '200':
+          description: OK
+
+  /user_ratings/{user_id}:
+    get:
+      summary: Display user ratings for specified user
+      tags:
+        - User Ratings
+      operationId: userdata.user_ratings.show_all_by_user
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: Delete all ratings for specified user
+      tags:
+        - User Ratings
+      operationId: userdata.user_ratings.clear_user_ratings
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+      responses:
+        '200':
+          description: "User's ratings removed"
+  
+  /user_ratings/{user_id}/movie/{movie_id}:
+    get:
+      summary: Show user rating for specified user and movie
+      tags:
+        - User Ratings
+      operationId: userdata.user_ratings.show_by_user_and_movie
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+        - $ref: "#/components/parameters/movie_id"
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: Delete user rating for specified user and movie
+      tags:
+        - User Ratings
+      operationId: userdata.user_ratings.remove_from_user_ratings
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+        - $ref: "#/components/parameters/movie_id"
+      responses:
+        "200":
+          description: "User rating removed"
+  
+  /user_ratings/{user_id}/movie/{movie_id}/like:
+    post:
+      summary: Insert like for specified user and movie
+      tags:
+        - User Ratings
+      operationId: userdata.user_ratings.add_rating_like
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+        - $ref: "#/components/parameters/movie_id"
+      responses:
+        "200":
+          description: "User rating added"
+  
+  /user_ratings/{user_id}/movie/{movie_id}/dislike:
+    post:
+      summary: Insert dislike for specified user and movie
+      tags:
+        - User Ratings
+      operationId: userdata.user_ratings.add_rating_dislike
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+        - $ref: "#/components/parameters/movie_id"
+      responses:
+        "200":
+          description: "User rating added"
+  
+  /user_ratings/clear:
+    delete:
+      summary: Clear all user ratings
+      tags:
+        - User Ratings
+      operationId: userdata.user_ratings.clear_all
+      responses:
+        "200":
+          description: "All user ratings cleared"
+
 
 ## MOVIES LIST
   /movies:

@@ -35,7 +35,7 @@ def remove_from_watch_history(user_id, movie_id):
     for entry in watch_history:
         entry.supressed = True
     db.session.commit()
-    return WatchHistorys_schema.dump(watch_history), 200
+    return 200
 
 
 def clear_watch_history(user_id):
@@ -43,7 +43,7 @@ def clear_watch_history(user_id):
     for entry in watch_history:
         entry.supressed = True
     db.session.commit()
-    return WatchHistorys_schema.dump(watch_history), 200
+    return 200
 
 
 def clear_all():
