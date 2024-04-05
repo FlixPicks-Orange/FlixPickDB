@@ -117,14 +117,14 @@ class UserClicksSchema(ma.SQLAlchemyAutoSchema):
 UserClick_schema = UserClicksSchema()
 UserClicks_schema = UserClicksSchema(many=True)
 
-"""class Interactions(db.Model):
-    __tablename__ = "Interactions"
+#class Interactions(db.Model):
+#   __tablename__ = "Interactions"
     
-class InteractionsSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Interactions
-        load_instance = True
-        sqla_session = db.session
+# class InteractionsSchema(ma.SQLAlchemyAutoSchema):
+#     class Meta:
+#         model = Interactions
+#         load_instance = True
+#         sqla_session = db.session
 
-interaction_schema = InteractionsSchema()
-interactons_schema = InteractionsSchema(many=True)"""
+# interaction_schema = InteractionsSchema()
+# interactons_schema = InteractionsSchema(many=True)
