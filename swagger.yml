@@ -62,7 +62,19 @@ components:
           type: integer
         title:
           type: string
-
+    UserClicks:
+      type: object
+      required:
+        - user_id
+        - page_id
+        - click_num
+      properties:
+        user_id:
+          type: integer
+        page_id:
+          type: integer
+        click_num:
+          type: integer
 
   parameters:
     username:
@@ -117,6 +129,7 @@ components:
 
 
 
+
 tags:
   - name: Movies
     description: Basic movie information found on FlixPicks
@@ -136,6 +149,8 @@ tags:
     description: History of User Ratings for Movies (Likes and Dislikes)
   - name: Interactions
     description: User interactions with media through FlixPicks
+  - name: User Clicks
+    description: User Clicks on Pages through FlixPicks
 
 
 
@@ -631,7 +646,22 @@ paths:
       responses:
         '200':
           description: OK
-
+    post:
+      summary: Add to an item to the user's clicks
+      tags:
+        - User Clicks
+      operationId: "userdata.user_clicks.add"
+      requestBody:
+        description: "Entry to add to user's clicks"
+        required: true
+        content:
+          application/json:
+            schema:
+                x-body-name: "entry"
+                $ref: "#/components/schemas/UserClicks"
+      responses:
+        "201":
+          description: "New entry added successfully"
 ## MOVIES LIST
   /movies:
     get:
