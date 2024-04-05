@@ -15,7 +15,7 @@ import simulations.recommendations
 import simulations.user_ratings
 import content.discovery.movie_providers as movie_providers
 import content.discovery.popular_movies as popular_movies
-
+import userdata.user_clicks as clicks
 app = config.connex_app
 
 @app.route("/")
@@ -84,8 +84,13 @@ def show_user_ratings():
     df = df.reindex(columns=["id", "user_id", "movie_id", "user_liked"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
     return render_template("display_table.html", table_html = table_html, table_name="User Ratings", path="/api/user_ratings")
-
-
+@app.route("/Tables/User_Clicks")
+def show_user_clicks():
+    table_data = clicks.show_all()
+    df = pd.DataFrame(table_data)
+    df = df.reindex(columns=["id", "user_id", "page_id", "click_num", "timestamp"])
+    table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
+    return render_template("display_table.html", table_html = table_html, table_name="User Clicks", path="/api/user_clicks")
 @app.route("/Tables/Movies")
 def show_movies():
     table_data = movies.show_all()
