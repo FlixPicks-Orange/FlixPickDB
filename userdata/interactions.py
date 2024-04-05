@@ -8,7 +8,7 @@ from userdata.models import Interactions, interaction_schema, interactons_schema
 """ 
 A Registered User who watched a trailer for more than 3 seconds shall be captured in the database
 """
-def trailer_watched():
+"""def trailer_watched():
     pass
 
 def wheel_submit():
@@ -21,4 +21,4 @@ def most_used_provider():
     pass
 
 def cineroll_count():
-    pass
+    pass"""

@@ -622,7 +622,15 @@ paths:
       responses:
         "200":
           description: "All user ratings cleared"
-
+  /user_clicks:
+    get:
+      summary: Display all user clicks (all users)
+      tags:
+        - User Clicks
+      operationId: userdata.user_clicks.show_all
+      responses:
+        '200':
+          description: OK
 
 ## MOVIES LIST
   /movies:

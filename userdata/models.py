@@ -100,9 +100,24 @@ class UserRatingsSchema(ma.SQLAlchemyAutoSchema):
 UserRating_schema = UserRatingsSchema()
 UserRatings_schema = UserRatingsSchema(many=True)
 
+class UserClicks(db.Model):
+    __tablename__ = "User_Clicks"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    page_id = db.Column(db.Integer)
+    click_num = db.Column(db.Integer)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
+class UserClicksSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = UserClicks
+        load_instance = True
+        sqla_session = db.session
 
-class Interactions(db.Model):
+UserClick_schema = UserClicksSchema()
+UserClicks_schema = UserClicksSchema(many=True)
+
+"""class Interactions(db.Model):
     __tablename__ = "Interactions"
     
 class InteractionsSchema(ma.SQLAlchemyAutoSchema):
@@ -112,4 +127,4 @@ class InteractionsSchema(ma.SQLAlchemyAutoSchema):
         sqla_session = db.session
 
 interaction_schema = InteractionsSchema()
-interactons_schema = InteractionsSchema(many=True)
+interactons_schema = InteractionsSchema(many=True)"""
