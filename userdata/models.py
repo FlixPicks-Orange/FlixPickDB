@@ -102,14 +102,14 @@ UserRatings_schema = UserRatingsSchema(many=True)
 
 
 
-class Interactions(db.Model):
-    __tablename__ = "Interactions"
+# class Interactions(db.Model):
+#     __tablename__ = "Interactions"
     
-class InteractionsSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Interactions
-        load_instance = True
-        sqla_session = db.session
+# class InteractionsSchema(ma.SQLAlchemyAutoSchema):
+#     class Meta:
+#         model = Interactions
+#         load_instance = True
+#         sqla_session = db.session
 
-interaction_schema = InteractionsSchema()
-interactons_schema = InteractionsSchema(many=True)
+# interaction_schema = InteractionsSchema()
+# interactons_schema = InteractionsSchema(many=True)
