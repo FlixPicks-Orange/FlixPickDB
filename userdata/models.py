@@ -104,7 +104,7 @@ class UserClicks(db.Model):
     __tablename__ = "User_Clicks"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer)
-    page_id = db.Column(db.Integer)
+    page_id = db.Column(db.String(255))
     click_num = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 

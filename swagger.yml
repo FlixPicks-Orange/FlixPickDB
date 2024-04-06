@@ -72,7 +72,7 @@ components:
         user_id:
           type: integer
         page_id:
-          type: integer
+          type: string
         click_num:
           type: integer
 
