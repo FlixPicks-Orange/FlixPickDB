@@ -16,6 +16,7 @@ def run_simulation(Operation, MinEntries, MaxEntries, ProbFrequency):
 
 
 def generate_random(MinEntries, MaxEntries, ProbFrequency):
+    if MaxEntries < MinEntries: MaxEntries = MinEntries
     user_list = get_all_user_ids()
     for user in user_list:
         number_to_add = random.randint(MinEntries, MaxEntries)

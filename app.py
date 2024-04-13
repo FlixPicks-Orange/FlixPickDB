@@ -84,6 +84,8 @@ def show_user_ratings():
     df = df.reindex(columns=["id", "user_id", "movie_id", "user_liked"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
     return render_template("display_table.html", table_html = table_html, table_name="User Ratings", path="/api/user_ratings")
+
+
 @app.route("/Tables/User_Clicks")
 def show_user_clicks():
     table_data = clicks.show_all()
@@ -91,6 +93,8 @@ def show_user_clicks():
     df = df.reindex(columns=["id", "user_id", "page_id", "click_num", "timestamp"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
     return render_template("display_table.html", table_html = table_html, table_name="User Clicks", path="/api/user_clicks")
+
+
 @app.route("/Tables/Movies")
 def show_movies():
     table_data = movies.show_all()
@@ -158,10 +162,13 @@ def clear_watch_history():
     return redirect(url_for('simulation'))
 
 
-@app.route("/Simulation/Recommendations")
+@app.route("/Simulation/Recommendations", methods=['GET', 'POST'])
 def simulation_recommendations():
-    simulations.recommendations.generate()
-    session["sim_result"] = { "error": False, "message": "Simulated Recommendations Populated!" }
+    if request.method == 'POST':
+        simulations.recommendations.generate(int(request.form['NumRec']))
+        session["sim_result"] = { "error": False, "message": "Simulated Recommendations Populated!" }
+    else:
+        session["sim_result"] = { "error": True, "message": "Unable to generate simulated users!" }
     return redirect(url_for('simulation'))
 
 
