@@ -16,11 +16,18 @@ import simulations.user_ratings
 import content.discovery.movie_providers as movie_providers
 import content.discovery.popular_movies as popular_movies
 import userdata.user_clicks as clicks
+import userdata.watch_history as watch_history
 app = config.connex_app
 
 @app.route("/")
 def home():
     return render_template("home.html")
+
+
+@app.route("/test")
+def test():
+    results = watch_history.get_genres_watched(1)
+    return results
 
 
 @app.route("/find_popular")
@@ -185,7 +192,6 @@ def simulation_user_ratings():
         ProbRating = int(request.form['ProbRating'])
         ProbLikes = int(request.form['ProbLikes'])
         session["sim_result"] = simulations.user_ratings.run_simulation(ProbRating, ProbLikes)
-        #session["sim_result"] = { "error": False, "message": "TEST:  Prob Rating: " + str(ProbRating) + "   Prob Likes: " + str(ProbLikes) }
     else:
         session["sim_result"] = { "error": True, "message": "Unable to generate simulated Watch History!" }
     return redirect(url_for('simulation'))
