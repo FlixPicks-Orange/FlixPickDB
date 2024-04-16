@@ -9,12 +9,14 @@ import userdata.user_ratings as user_ratings
 import content.movies as movies
 import content.providers as providers
 import content.genres as genres
+import content.movie_genres as movie_genres
+import content.movie_providers as movie_providers
 import simulations.userdata as usersim
 import simulations.watchhistory
 import simulations.recommendations
 import simulations.user_ratings
-import content.discovery.movie_providers as movie_providers
-import content.discovery.popular_movies as popular_movies
+#import content.discovery.movie_providers as movie_providers
+#import content.discovery.popular_movies as popular_movies
 import userdata.user_clicks as clicks
 import userdata.watch_history as watch_history
 app = config.connex_app
@@ -22,25 +24,6 @@ app = config.connex_app
 @app.route("/")
 def home():
     return render_template("home.html")
-
-
-@app.route("/test")
-def test():
-    results = watch_history.get_genres_watched(1)
-    return results
-
-
-@app.route("/find_popular")
-def find_popular():
-    data = popular_movies.find_popular_movies()
-    return jsonify(data)
-
-
-@app.route("/update_providers")
-def update_providers():
-    #data = discovery.get_providers_for_movie(1,609681)
-    data = movie_providers.find_missing_providers()
-    return jsonify(data)
 
 
 @app.route("/Tables")
@@ -63,7 +46,7 @@ def show_subscriptions():
     df = pd.DataFrame(table_data)
     df = df.reindex(columns=["id", "user_id", "provider_id"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
-    return render_template("display_table.html", table_html = table_html, table_name="Users", path="/api/subscriptions")
+    return render_template("display_table.html", table_html = table_html, table_name="Subscriptions", path="/api/subscriptions")
 
 
 @app.route("/Tables/WatchHistory")
@@ -108,7 +91,7 @@ def show_movies():
     df = pd.DataFrame(table_data)
     df = df.reindex(columns=["movie_id", "tmdb_id", "title", "release_date", "runtime", "poster_path", "backdrop_path", "language"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
-    return render_template("display_table.html", table_html = table_html, table_name="Users", path="/api/subscriptions")
+    return render_template("display_table.html", table_html = table_html, table_name="Movies", path="/api/subscriptions")
 
 
 @app.route("/Tables/Providers")
@@ -117,7 +100,7 @@ def show_providers():
     df = pd.DataFrame(table_data)
     df = df.reindex(columns=["provider_id", "tmdb_id", "provider_name", "display_priority", "logo_path", "region"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
-    return render_template("display_table.html", table_html = table_html, table_name="Users", path="/api/providers")
+    return render_template("display_table.html", table_html = table_html, table_name="Streaming Providers", path="/api/providers")
 
 
 @app.route("/Tables/Genres")
@@ -126,7 +109,25 @@ def show_genres():
     df = pd.DataFrame(table_data)
     df = df.reindex(columns=["genre_id", "tmdb_id", "genre_name"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
-    return render_template("display_table.html", table_html = table_html, table_name="Users", path="/api/genres")
+    return render_template("display_table.html", table_html = table_html, table_name="Genres", path="/api/genres")
+
+
+@app.route("/Tables/Movie-Genres")
+def show_movie_genres():
+    table_data = movie_genres.show_all()
+    df = pd.DataFrame(table_data)
+    df = df.reindex(columns=["id", "genre_id", "movie_id"])
+    table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
+    return render_template("display_table.html", table_html = table_html, table_name="Movie Genres", path="/api/movies/all_genres")
+
+
+@app.route("/Tables/Movie-Providers")
+def show_movie_providers():
+    table_data = movie_providers.show_all()
+    df = pd.DataFrame(table_data)
+    df = df.reindex(columns=["id", "provider_id", "movie_id", "link"])
+    table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
+    return render_template("display_table.html", table_html = table_html, table_name="Movie Providers", path="/api/movies/all_providers")
 
 
 @app.route("/Simulation")
