@@ -47,6 +47,8 @@ components:
           type: integer
         movie_id:
           type: integer
+        provider_id:
+          type: integer
         from_recommended:
           type: boolean
     Recommendations:

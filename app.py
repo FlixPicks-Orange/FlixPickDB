@@ -53,7 +53,7 @@ def show_subscriptions():
 def show_watch_history():
     table_data = watch_history.show_all()
     df = pd.DataFrame(table_data)
-    df = df.reindex(columns=["id", "user_id", "movie_id", "watched", "from_recommended", "supressed"])
+    df = df.reindex(columns=["id", "user_id", "movie_id", "provider_id", "watched", "from_recommended", "supressed"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
     return render_template("display_table.html", table_html = table_html, table_name="Watch History", path="/api/watch_history")
 

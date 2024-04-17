@@ -33,6 +33,7 @@ class WatchHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer)
     movie_id = db.Column(db.Integer)
+    provider_id = db.Column(db.Integer, default=0)
     watched = db.Column(db.DateTime, default=datetime.utcnow)
     from_recommended = db.Column(db.Boolean, default=False)
     supressed = db.Column(db.Boolean, default=False)

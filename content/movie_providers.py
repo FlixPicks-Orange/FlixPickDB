@@ -1,4 +1,4 @@
-from flask import abort, make_response
+from flask import abort, make_response, jsonify
 from datetime import datetime
 from config import db
 from content.models import MovieProvider, MovieProvider_schema, MovieProviders_schema
@@ -23,6 +23,12 @@ def get_by_movie_id(movie_id):
     )
     providers = build_object(query_result)
     return providers
+
+
+def get_id_by_movie_id(movie_id):
+    providers = MovieProvider.query.filter(MovieProvider.movie_id == movie_id).all()
+    provider_ids = [provider.provider_id for provider in providers]
+    return provider_ids    
 
 
 def build_object(query_data):
