@@ -62,7 +62,7 @@ def show_watch_history():
 def show_recommendations():
     table_data = recommendations.show_all()
     df = pd.DataFrame(table_data)
-    df = df.reindex(columns=["id", "user_id", "movie_id", "recommended"])
+    df = df.reindex(columns=["id", "user_id", "movie_id","title", "recommended"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
     return render_template("display_table.html", table_html = table_html, table_name="Recommendations", path="/api/recommendations")
 

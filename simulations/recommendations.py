@@ -1,6 +1,7 @@
 import random
 import os, requests
 from userdata.users import get_all_user_ids
+from content.movies import get_by_movie_id
 
 def generate(limit=25):
     user_list = get_all_user_ids()
@@ -10,7 +11,7 @@ def generate(limit=25):
             movie_id = random.randint(1, 380)
             package = {
             "movie_id": movie_id,
-            "title" : "Default",
+            "title" : get_by_movie_id(movie_id)[0]['title'],
             "user_id" : int(user)
             }
             response = requests.post(os.getenv('DB_URL') + "/recommendations", json=package)
