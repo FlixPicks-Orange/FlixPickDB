@@ -101,6 +101,8 @@ class UserRatingsSchema(ma.SQLAlchemyAutoSchema):
 UserRating_schema = UserRatingsSchema()
 UserRatings_schema = UserRatingsSchema(many=True)
 
+
+# User Clicks Model
 class UserClicks(db.Model):
     __tablename__ = "User_Clicks"
     id = db.Column(db.Integer, primary_key=True)
@@ -118,14 +120,23 @@ class UserClicksSchema(ma.SQLAlchemyAutoSchema):
 UserClick_schema = UserClicksSchema()
 UserClicks_schema = UserClicksSchema(many=True)
 
-#class Interactions(db.Model):
-#   __tablename__ = "Interactions"
-    
-# class InteractionsSchema(ma.SQLAlchemyAutoSchema):
-#     class Meta:
-#         model = Interactions
-#         load_instance = True
-#         sqla_session = db.session
 
-# interaction_schema = InteractionsSchema()
-# interactons_schema = InteractionsSchema(many=True)
+# User Interactions Model
+class UserReactions(db.Model):
+    __tablename__ = "User_Reactions"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    movie_id = db.Column(db.Integer)
+    emoticon = db.Column(db.String(12))
+    reaction = db.Column(db.String(255))
+    timestamp = db.Column(db.Integer)
+    date = db.Column(db.DateTime, default=datetime.now)
+    
+class UserReactionsSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = UserReactions
+        load_instance = True
+        sqla_session = db.session
+
+UserReaction_schema = UserReactionsSchema()
+UserReactions_schema = UserReactionsSchema(many=True)

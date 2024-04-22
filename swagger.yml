@@ -128,7 +128,20 @@ components:
       required: True
       schema:
         type: "string"
-
+    timestamp:
+      name: "timestamp"
+      description: "timestamp location in movie"
+      in: path
+      required: True
+      schema:
+        type: "string"
+    emoticon:
+      name: "emoticon"
+      description: "unicode representation of an emoticon"
+      in: path
+      required: True
+      schema:
+        type: "string"
 
 
 
@@ -149,8 +162,8 @@ tags:
     description: List of recommendations generated for each registered user
   - name: User Ratings
     description: History of User Ratings for Movies (Likes and Dislikes)
-  - name: Interactions
-    description: User interactions with media through FlixPicks
+  - name: User Reactions
+    description: User Reactions with media through FlixPicks
   - name: User Clicks
     description: User Clicks on Pages through FlixPicks
 
@@ -652,6 +665,47 @@ paths:
       responses:
         "200":
           description: "All user ratings cleared"
+  
+  ## User Reactions
+  /reactions:
+    get:
+      summary: Display all user reactions (all users)
+      tags:
+        - User Reactions
+      operationId: userdata.user_reactions.show_all
+      responses:
+        '200':
+          description: OK
+  
+  /reactions/summary/{movie_id}:
+    get:
+      summary: Display reaction summary for specified movie
+      tags:
+        - User Reactions
+      operationId: userdata.user_reactions.movie_reaction_summary
+      parameters:
+        - $ref: "#/components/parameters/movie_id"
+      responses:
+        '200':
+          description: OK
+  
+  /reactions/add/{user_id}/{movie_id}/{timestamp}/{emoticon}:
+    post:
+      summary: Insert love reaction for specified user and movie
+      tags:
+        - User Reactions
+      operationId: userdata.user_reactions.insert_reaction
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+        - $ref: "#/components/parameters/movie_id"
+        - $ref: "#/components/parameters/timestamp"
+        - $ref: "#/components/parameters/emoticon"
+      responses:
+        "201":
+          description: "User reaction added"
+
+
+  ## User Clicks
   /user_clicks:
     get:
       summary: Display all user clicks (all users)
@@ -677,6 +731,8 @@ paths:
       responses:
         "201":
           description: "New entry added successfully"
+
+
 ## MOVIES LIST
   /movies:
     get:

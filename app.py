@@ -15,15 +15,21 @@ import simulations.userdata as usersim
 import simulations.watchhistory
 import simulations.recommendations
 import simulations.user_ratings
-#import content.discovery.movie_providers as movie_providers
-#import content.discovery.popular_movies as popular_movies
 import userdata.user_clicks as clicks
+import userdata.user_reactions as reactions
 import userdata.watch_history as watch_history
+
+import simulations.user_reactions as user_reactions
 app = config.connex_app
 
 @app.route("/")
 def home():
     return render_template("home.html")
+
+@app.route("/test")
+def testing():
+    user_reactions.simulate_user_reactions(10, 20)
+    return "done"
 
 
 @app.route("/Tables")
@@ -83,6 +89,15 @@ def show_user_clicks():
     df = df.reindex(columns=["id", "user_id", "page_id", "click_num", "timestamp"])
     table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
     return render_template("display_table.html", table_html = table_html, table_name="User Clicks", path="/api/user_clicks")
+
+
+@app.route("/Tables/User_Reactions")
+def show_user_reactions():
+    table_data = reactions.show_all()
+    df = pd.DataFrame(table_data)
+    df = df.reindex(columns=["id", "user_id", "movie_id", "reaction", "timestamp", "date"])
+    table_html = df.to_html(classes=["table", "table-bordered", "table-striped"], index=False)
+    return render_template("display_table.html", table_html = table_html, table_name="User Reactions", path="/api/reactions")
 
 
 @app.route("/Tables/Movies")

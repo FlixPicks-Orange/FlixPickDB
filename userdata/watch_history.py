@@ -10,7 +10,7 @@ from content.movie_genres import get_by_movie_id as get_movie_genre
 # https://docs.sqlalchemy.org/en/13/orm/query.html#sqlalchemy.orm.query.Query.filter
 
 def show_all():
-    history = WatchHistory.query.all()
+    history = WatchHistory.query.order_by(WatchHistory.movie_id).all()
     return WatchHistorys_schema.dump(history)
 
 
