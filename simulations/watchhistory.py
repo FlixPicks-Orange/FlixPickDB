@@ -43,15 +43,22 @@ def generate_random(MinEntries, MaxEntries, ProbFrequency):
 def generate_pattern():
     user_list = get_all_user_ids()
     for user in user_list:
-        group = random.randint(1,4)
+        group = random.randint(1,5)
         if group == 1:
-            movielist = [100,101,102,103,104,105]
+        #Action Movies
+            movielist = [32,7,37,216,15,105]
         if group == 2:
-            movielist = [100,101,102,103]
+        #Pirates
+            movielist = [37,94,99,114,193]
         if group == 3:
-            movielist = [200, 201, 202,203,204,205]
+        #Harry Potter
+            movielist = [61,69,76,84,102,103,111]
         if group == 4:
-            movielist = [200, 201,202,203]
+        #Scary
+            movielist = [200,218,369,241]
+        if group == 5:
+        #Kids
+            movielist = [106,172,247,334,257,89,149,328,185,238]
         for number in movielist:
             package = {
             "movie_id": number,
